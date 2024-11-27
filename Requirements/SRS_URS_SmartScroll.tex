@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumerate}
+
+\title{SmartScroll: Software Requirements Specification and User Requirements Specification}
+
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Purpose of this Document}
+This document outlines the **Software Requirements Specification (SRS)** and **User Requirements Specification (URS)** for the AI-Driven Interactive Learning Platform. It provides an overview of the system's functional and non-functional requirements, user expectations, and goals for stakeholders such as students, professors, teaching assistants, and the development team. The URS section ensures the platform aligns with user needs and business goals, guiding design and development, while the SRS ensures the platform meets necessary technical and functional requirements.
+
+\subsection{Objective of SRS}
+The SRS defines the system’s functionality, performance, design constraints, and behavior, offering detailed specifications for the development team. It ensures the platform fulfills all technical requirements and functions as expected.
+
+\subsection{Objective of URS}
+The URS focuses on business needs and user expectations, primarily from students and educators. It includes user stories, privacy considerations, and interactions with the system to ensure the platform meets user needs and delivers value.
+
+
+\section{Software Requirements Specification (SRS)}
+
+\subsection{Introduction}
+The AI-Driven Interactive Learning Platform is designed to provide personalized learning experiences for students by automatically generating quizzes, flashcards, and summaries from user-uploaded study materials. This section outlines the functional and non-functional requirements, as well as the system architecture, data handling, and security considerations.
+
+\subsection{Functional Requirements}
+\begin{itemize}
+    \item \textbf{Content Upload}: Users must be able to upload educational materials in PDF, video, or text format.
+    \item \textbf{AI-Driven Content Generation}: The system must automatically generate quizzes, flashcards, and summaries from the uploaded materials.
+    \item \textbf{Progress Tracking}: The system must allow users to track their study progress by showing quiz results, study time, and quiz history.
+    \item \textbf{User Authentication}: The system must authenticate users via Firebase for secure access.
+    \item \textbf{Multi-Language Support}: The app must support English and German, and potentially other languages as the user base expands.
+    \item \textbf{Data Privacy}: The system must comply with privacy regulations like GDPR, ensuring that user data is secure and private.
+    \item \textbf{AI Triggering}: The system should automatically trigger AI models to generate content after content upload.
+    \item \textbf{Study Group Integration}: Users should be able to interact with study groups and share content.
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+\begin{itemize}
+    \item \textbf{Performance}: The system should process uploaded content and generate learning resources within a reasonable time frame (e.g., less than 5 minutes for large PDFs).
+    \item \textbf{Scalability}: The platform should be able to handle an increasing number of users and content uploads without performance degradation.
+    \item \textbf{Reliability}: The system should be available 99.9\% of the time, with minimal downtime for maintenance.
+    \item \textbf{Security}: The platform should implement encryption for sensitive data and ensure compliance with security standards such as HTTPS and OAuth2 for authentication.
+    \item \textbf{Usability}: The platform should have an intuitive and user-friendly interface for ease of use by students and educators.
+\end{itemize}
+
+\subsection{System Architecture and Design}
+The AI-Driven Interactive Learning Platform follows a **3-tier architecture**, which is a widely used software architecture pattern that separates the application into three layers:
+
+\begin{itemize}
+    \item \textbf{Presentation Layer}: This layer is responsible for the user interface (UI), where users interact with the system (e.g., through web or mobile interfaces built with React.js and Flutter).
+    \item \textbf{Business Logic Layer}: This layer contains the core functionality and business logic, such as AI-driven content generation and user progress tracking. It will be built using FastAPI and handle the processing of user data.
+    \item \textbf{Data Layer}: This layer manages data storage and retrieval. MongoDB and SQLite will be used to store user data, study materials, generated content, and system logs.
+\end{itemize}
+
+The 3-tier architecture helps maintain clear separation of concerns, allowing each layer to be developed, tested, and maintained independently. It also enhances scalability, as each layer can be scaled independently depending on the system's load. For more detailed information about the design and detailed technical specifications, please refer to the separate **Software Architecture and Design Document**.
+
+\subsection{Privacy and Security Considerations}
+The system will ensure:
+\begin{itemize}
+    \item Compliance with GDPR for users in the EU.
+    \item Secure data storage and transfer using encryption methods like AES and SSL/TLS.
+    \item User consent management for the collection and use of personal data.
+\end{itemize}
+
+\section{User Requirements Specification (URS)}
+
+\subsection{Business Need and End-User Expectations}
+\subsubsection{Business Need}
+The AI-Driven Interactive Learning Platform addresses the growing need for more efficient and personalized learning tools. By automating the generation of study resources, the platform reduces the manual effort required for students to engage with learning materials, improving productivity and academic success.
+
+\subsubsection{End-User Expectations}
+Users expect the following features from the platform:
+\begin{itemize}
+    \item \textbf{Easy Content Upload}: A simple and seamless process for uploading study materials.
+    \item \textbf{AI-Generated Learning Resources}: Personalized and accurate quizzes, flashcards, and summaries generated from uploaded content.
+    \item \textbf{Progress Tracking}: Ability to track and monitor their study progress and learning outcomes.
+    \item \textbf{Data Privacy}: Secure handling of personal data, ensuring user privacy.
+    \item \textbf{Multi-Platform Access}: Access to the platform via mobile apps (Flutter) and web apps (React.js).
+\end{itemize}
+
+\subsection{Stakeholders}
+The stakeholders for this project include:
+\begin{itemize}
+    \item \textbf{Primary Users}: Students (undergraduate, postgraduate) who are looking for efficient study tools.
+    \item \textbf{Secondary Users}: Professors and Teaching Assistants (Übungsleitern) who provide academic support and monitor student progress.
+    \item \textbf{System Administrators}: Those responsible for maintaining the platform, ensuring security, and troubleshooting any issues.
+    \item \textbf{Development Team}: Engineers responsible for building, testing, and deploying the platform.
+\end{itemize}
+
+\subsection{User Stories}
+Here are some user stories that describe the key features of the platform:
+\begin{itemize}
+    \item \textbf{As a student}, I want to upload PDFs and videos so that I can generate personalized quizzes and summaries.
+    \item \textbf{As a student}, I want to track my learning progress so that I can focus on areas where I need improvement.
+    \item \textbf{As a professor}, I want to monitor student progress so that I can provide targeted support.
+    \item \textbf{As an administrator}, I want to ensure the system is secure and running smoothly so that users have a reliable experience.
+\end{itemize}
+
+\subsection{Goals and Impact on Education}
+The AI-Driven Interactive Learning Platform aims to transform the way students learn by integrating AI technology to generate personalized study resources automatically. The goals of the platform include:
+\begin{itemize}
+    \item \textbf{Improved Learning Efficiency}: By automating the creation of quizzes, flashcards, and summaries, students can focus more on learning than on preparing materials.
+    \item \textbf{Personalization}: The platform tailors study resources to individual students’ needs, promoting more effective learning.
+    \item \textbf{Accessible Education}: The platform helps democratize access to quality learning tools, making them available to a broader range of students.
+    \item \textbf{Support for Educators}: Professors and teaching assistants can track student progress more efficiently and offer more targeted support.
+\end{itemize}
+
+\subsection{Use Case Diagram}
+Below is the use case diagram for the AI-Driven Interactive Learning Platform:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{image.png}
+\caption{Use Case Diagram for AI-Driven Interactive Learning Platform}
+\end{figure}
+
+\section{Conclusion}
+This document outlines the critical software and user requirements for the AI-Driven Interactive Learning Platform. By addressing the needs of both students and educators, the platform aims to provide a personalized, efficient, and scalable learning experience, revolutionizing the way educational content is consumed and interacted with.
+\end{document}
