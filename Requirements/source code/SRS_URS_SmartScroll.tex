@@ -2,6 +2,9 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{tikz-uml}
+
 
 \title{SmartScroll: Software Requirements Specification and User Requirements Specification}
 
@@ -111,15 +114,42 @@ The AI-Driven Interactive Learning Platform aims to transform the way students l
     \item \textbf{Support for Educators}: Professors and teaching assistants can track student progress more efficiently and offer more targeted support.
 \end{itemize}
 
+%\newpage
 \subsection{Use Case Diagram}
 Below is the use case diagram for the AI-Driven Interactive Learning Platform:
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{image.png}
-\caption{Use Case Diagram for AI-Driven Interactive Learning Platform}
+\begin{tikzpicture}
+
+% Use-Case-System begin
+\begin{umlsystem} [x=0, y=0, fill=pink!20] {{Smart Scroll}}
+\umlusecase[name=case1, width=2cm]{Upload Content}
+\umlusecase[name=case2, width=2cm, y=-5.5] {Track Progress} 
+\umlusecase[name=case3, width=1.5cm, y=-3.75] {Content Sharing} 
+\umlusecase[name=case4, width=2cm, x=5, y=-1] {Generate Flashcards} 
+\umlusecase[name=case5, width=2.5cm, x=5, y=-3] {Generate Summaries} 
+\umlusecase[name=case6, width=2.5cm, x=5, y=-5] {Generate a Quiz} 
+\umlusecase[name=case7, width=2.5cm, x=0, y=-7] {Set Learning Preferences} 
+\umlusecase[name=case8, width=2cm, x=0, y=-2] {Edit Account Details} 
+\end{umlsystem}
+% end Use-Case-System 
+%Actors
+\umlactor[x=-3.5, y=-3]{user}
+\umlactor[x=10, y=-3]{AI-Powered Module}
+%Relations
+\umlassoc{user}{case1}
+\umlassoc{user}{case2}
+\umlassoc{user}{case3}
+\umlassoc{user}{case7}
+\umlassoc{user}{case8}
+\umlassoc{AI-Powered Module}{case4}
+\umlassoc{AI-Powered Module}{case5}
+\umlassoc{AI-Powered Module}{case6}
+\end{tikzpicture}
 \end{figure}
 
+\newpage
 \section{Conclusion}
 This document outlines the critical software and user requirements for the AI-Driven Interactive Learning Platform. By addressing the needs of both students and educators, the platform aims to provide a personalized, efficient, and scalable learning experience, revolutionizing the way educational content is consumed and interacted with.
 \end{document}
