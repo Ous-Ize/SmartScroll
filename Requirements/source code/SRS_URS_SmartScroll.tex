@@ -3,6 +3,7 @@
 \usepackage{hyperref}
 \usepackage{enumerate}
 \usepackage{tikz}
+\usepackage{enumitem}
 \usepackage{tikz-uml}
 
 
@@ -125,31 +126,121 @@ Below is the use case diagram for the AI-Driven Interactive Learning Platform:
 % Use-Case-System begin
 \begin{umlsystem} [x=0, y=0, fill=pink!20] {{Smart Scroll}}
 \umlusecase[name=case1, width=2cm]{Upload Content}
-\umlusecase[name=case2, width=2cm, y=-5.5] {Track Progress} 
-\umlusecase[name=case3, width=1.5cm, y=-3.75] {Content Sharing} 
-\umlusecase[name=case4, width=2cm, x=5, y=-1] {Generate Flashcards} 
-\umlusecase[name=case5, width=2.5cm, x=5, y=-3] {Generate Summaries} 
-\umlusecase[name=case6, width=2.5cm, x=5, y=-5] {Generate a Quiz} 
-\umlusecase[name=case7, width=2.5cm, x=0, y=-7] {Set Learning Preferences} 
+\umlusecase[name=case2, width=2cm, y=-7] {Track Progress} 
+\umlusecase[name=case3, width=1.5cm, y=-3.75] {Log in} 
+\umlusecase[name=case4, width=2cm, x=7, y=-1] {Generate Flashcards} 
+\umlusecase[name=case5, width=2.5cm, x=7, y=-3] {Generate Summaries} 
+\umlusecase[name=case6, width=2.5cm, x=7, y=-5] {Generate a Quiz} 
+\umlusecase[name=case10, width=2.5cm, x=7, y=-8] {Chatbot Interaction} 
+\umlusecase[name=case7, width=2.5cm, x=0, y=-9] {Set Learning Preferences} 
 \umlusecase[name=case8, width=2cm, x=0, y=-2] {Edit Account Details} 
+\umlusecase[name=case9, width=2cm, x=3, y=-5.5] {sign up} 
 \end{umlsystem}
 % end Use-Case-System 
 %Actors
 \umlactor[x=-3.5, y=-3]{user}
-\umlactor[x=10, y=-3]{AI-Powered Module}
 %Relations
 \umlassoc{user}{case1}
 \umlassoc{user}{case2}
 \umlassoc{user}{case3}
 \umlassoc{user}{case7}
 \umlassoc{user}{case8}
-\umlassoc{AI-Powered Module}{case4}
-\umlassoc{AI-Powered Module}{case5}
-\umlassoc{AI-Powered Module}{case6}
+\umlextend{case1}{case4}
+\umlextend{case1}{case5}
+\umlextend{case1}{case6}
+\umlextend{case1}{case10}
+\umlinclude{case3}{case9}
 \end{tikzpicture}
 \end{figure}
 
-\newpage
+\section*{Use Case Specifications}
+
+\subsection*{1. Upload Content}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The user uploads a PDF file to the system. Based on this file, the system can generate flashcards, summaries, and quizzes.
+    \item \textbf{Precondition:} The user must be logged in to upload content.
+    \item \textbf{Input:} A PDF document (content can cover any topic).
+    \item \textbf{Postcondition:} Content is available for AI-driven learning activities (flashcards, summaries, quizzes).
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{2. Log In}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} Allows users to log into the system if they have an existing account.
+    \item \textbf{Precondition:} User has an existing account.
+    \item \textbf{Input:} Email and password.
+    \item \textbf{Postcondition:} User is logged into the system.
+    \item \textbf{Relationships:}  
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{3. Sign Up}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} Allows new users to create an account.
+    \item \textbf{Precondition:} User does not have an account.
+    \item \textbf{Input:} Email, name, and password.
+    \item \textbf{Postcondition:} New account is created, and the user can log in.
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{4. Edit Account Details}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The user can modify their personal information, such as name, password, and email.
+    \item \textbf{Precondition:} User must be logged in.
+    \item \textbf{Input:} New name, email, or password.
+    \item \textbf{Postcondition:} Updated account details are saved.
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{5. Track Progress}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} Allows users to monitor their progress, including the number of quizzes completed and passed.
+    \item \textbf{Precondition:} User must have completed at least one quiz or learning activity.
+    \item \textbf{Output:} A progress report showing the number of quizzes attempted, quizzes passed, and other performance metrics.
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{6. Set Learning Preferences}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The user can choose their preferred type of learning activity, such as quizzes, flashcards, or summaries.
+    \item \textbf{Precondition:} User must be logged in.
+    \item \textbf{Input:} Selection of learning activity type (quiz, flashcards, summaries).
+    \item \textbf{Postcondition:} Preferences are saved and used for future learning sessions.
+    \item \textbf{Actors:} User.
+\end{itemize}
+
+\subsection*{7. Generate Flashcards}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The system generates flashcards based on the uploaded PDF content.
+    \item \textbf{Precondition:} Content must be uploaded.
+    \item \textbf{Output:} A set of flashcards related to the uploaded content.
+    \item \textbf{Actors:} System.
+\end{itemize}
+
+\subsection*{8. Generate Summaries}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The system generates summaries from the uploaded PDF content.
+    \item \textbf{Precondition:} Content must be uploaded.
+    \item \textbf{Output:} Summaries based on the uploaded content.
+    \item \textbf{Actors:} System.
+\end{itemize}
+
+\subsection*{9. Generate a Quiz}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The system generates quizzes based on the uploaded PDF content.
+    \item \textbf{Precondition:} Content must be uploaded.
+    \item \textbf{Output:} A quiz with questions related to the uploaded content.
+    \item \textbf{Actors:} System.
+\end{itemize}
+
+\subsection*{10. Chatbot Interaction}
+\begin{itemize}[left=0pt]
+    \item \textbf{Description:} The user can interact with a chatbot to ask questions related to the uploaded content. The chatbot provides AI-generated answers.
+    \item \textbf{Precondition:} Content must be uploaded, and the user must be logged in.
+    \item \textbf{Input:} User's question or query related to the content.
+    \item \textbf{Output:} AI-generated answers or clarifications based on the uploaded content.
+    \item \textbf{Actors:} User.
+\end{itemize}
 \section{Conclusion}
 This document outlines the critical software and user requirements for the AI-Driven Interactive Learning Platform. By addressing the needs of both students and educators, the platform aims to provide a personalized, efficient, and scalable learning experience, revolutionizing the way educational content is consumed and interacted with.
 \end{document}
