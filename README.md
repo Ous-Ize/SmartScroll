@@ -5,7 +5,7 @@ flashcards, and summaries from user-uploaded study materials.
 
 ![SmartScroll Mock-Up](SmartScroll_gif_mockup_2.gif)
 
-** React Native Installation**
+**React Native Installation**
 
 Clone the repository -> Navigate to react-native-app folder:
 
