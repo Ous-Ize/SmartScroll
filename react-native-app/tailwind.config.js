@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         background: '#FFFDF5',
         lightBlack: '#3F3F3F',
+        orangebutton: '#F58232',
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

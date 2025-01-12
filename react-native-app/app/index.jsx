@@ -9,27 +9,24 @@ export default function App() {
   return (
     <SafeAreaView className="bg-background h-full">
       <ScrollView contentContainerStyle={{ height: '100%'}}>
-        <View className="absolute top-[230px] left-[48px]">
+        <View className="items-start px-6 py-[300px]">
           <Image 
             source={images.logo} 
             resizeMode="contain" 
-            className="w-[200px] h-[200px]"
+            className="px-4 w-[200px] h-[200px]"
           />
-        </View>
-        <View className="absolute top-[450px] left-[48px]">
-            <Text 
-            className="text-5xl text-black font-bold text-left"
+          <Text 
+            className="px-4 text-4xl text-black font-bold text-left"
             numberOfLines={2}
             >
-              Welcome {'\n'} to Smart scroll
+              Welcome {'\n'}to SmartScroll!
             </Text>
             <CustomButton
               title="Home"
               handlePress={() => router.push('/home')}
               containerStyles="w-full mt-7"
              />
-
-          </View>
+        </View>
       </ScrollView>
       {/* <StatusBar backgroundColor='' style='dark' /> */}
     </SafeAreaView>
