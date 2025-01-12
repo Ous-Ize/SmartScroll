@@ -1,21 +1,45 @@
-import { View, Text, FlatList, Image } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, Image, RefreshControl, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { router } from 'expo-router'
 
 import { images } from '../../constants'
 import EmptyState from '../../components/EmptyState'
-
-const data = [{ id: 1 }, { id: 2 }, { id: 3 }]
+import summaryData from '../../test-data/summary.json'
+import SummaryCard from '../../components/SummaryCard'
 
 const Home = () => {
+
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    // check if there is any new content
+    setRefreshing(false);
+
+  }
+
   return (
     <SafeAreaView className="bg-background h-full">
       <FlatList
         // data={data}
-        data={[]}
+        data={summaryData}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-          <Text className="text-3xl">{item.id}</Text>
+          <TouchableOpacity
+            onPress={() =>
+              router.push({
+                pathname: '/home/detail', // Navigate to the detail page
+                params: {
+                  title: item.title,
+                  text: item.text,
+                  image_source: item.image_source,
+                },
+              })
+            }
+          >
+            <SummaryCard summary={item} />
+          </TouchableOpacity>
         )}
         ListHeaderComponent={() => (
           <View className="mb-6 px-4 space-y-6 bg-background">
@@ -45,6 +69,7 @@ const Home = () => {
           />
         )}
         stickyHeaderIndices={[0]}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       />
     </SafeAreaView>
   )
