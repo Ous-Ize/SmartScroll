@@ -1,4 +1,5 @@
-'''To run the app use "uvicorn main:app --reload" in the app folder'''
+'''To run the backend app use "uvicorn main:app --reload" in the app folder. the app will run on http://127.0.0.1:8000
+'''
 from fastapi import FastAPI
 from routes.RESTApiHandler import FlashcardsRoutes, QuizzesRoutes, SummariesRoutes, UsersRoutes
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,7 +9,7 @@ app = FastAPI()
 # Add CORS Middleware for cross-origin requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace "*" with specific origins in production
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,6 +25,7 @@ users_routes = UsersRoutes()
 app.include_router(flashcards_routes.router, prefix="/flashcards")
 app.include_router(summaries_routes.router, prefix="/summaries")
 app.include_router(quizzes_routes.router, prefix="/quizzes")
+app.include_router(users_routes.router, prefix="/users")
 
 @app.get("/")
 def read_root():

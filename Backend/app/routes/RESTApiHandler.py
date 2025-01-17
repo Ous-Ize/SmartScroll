@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from database import db  # MongoDBHandler instance
+from database.mongoDBHandler import db  # MongoDBHandler instance
 from typing import Optional
 
 class BaseRoutes:
@@ -54,7 +54,7 @@ class BaseRoutes:
             elif self.collection_name == "quizzes":
                 self.db_handler.update_quizzes(filter, update)
             elif self.collection_name == "users":
-                self.db_handler.update_userss(filter, update)
+                self.db_handler.update_users(filter, update)
             else:
                 raise HTTPException(status_code=400, detail="Unknown collection")
             return {"message": f"{self.collection_name.capitalize()} updated successfully."}

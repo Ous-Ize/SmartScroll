@@ -9,6 +9,7 @@ class MongoDBHandler:
             self.client = MongoClient(config.DB_URI, serverSelectionTimeoutMS=5000)
             # Check if the server is available
             self.client.admin.command('ping')
+            self.db = self.client[config.DB_NAME]  # Use your database name from config
             print("Connected to MongoDB.")
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
@@ -123,19 +124,25 @@ class MongoDBHandler:
         print(f"{result.deleted_count} document(s) deleted from '{collection_name}' collection.")
     
 
+    def serialize_document(self, document):
+        '''Convert MongoDB document to a serializable format'''
+        if document and "_id" in document:
+            document["_id"] = str(document["_id"])  # Convert ObjectId to string
+        return document
+
+
     def find_documents(self, collection_name: str, filter: dict = None):
         '''Find documents in a collection'''
         collection = self.get_collection(collection_name)
-        if filter:
-            return collection.find(filter)
-        return collection.find()
-    
+        results = collection.find(filter or {})
+        return [self.serialize_document(doc) for doc in results]
 
     def aggregate_documents(self, collection_name: str, pipeline: list):
         '''Run aggregation pipeline on a collection'''
         collection = self.get_collection(collection_name)
         result = collection.aggregate(pipeline)
-        return list(result)
+        return [self.serialize_document(doc) for doc in result]
+    
     
 
 # Initialize the MongoDB connection
