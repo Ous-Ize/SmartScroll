@@ -1,0 +1,53 @@
+[
+    {
+      "id": "1",
+      "question": "What is React Native?",
+      "answer": "A framework for building native apps using React."
+    },
+    {
+      "id": "2",
+      "question": "What does OOP stand for?",
+      "answer": "Object-Oriented Programming."
+    },
+    {
+      "id": "3",
+      "question": "What is DNS?",
+      "answer": "DNS translates domain names to IP addresses."
+    },
+    {
+      "id": "4",
+      "question": "What is an API?",
+      "answer": "An Application Programming Interface that allows software components to communicate."
+    },
+    {
+      "id": "5",
+      "question": "What is JSX?",
+      "answer": "JSX stands for JavaScript XML, allowing you to write HTML-like syntax in React."
+    },
+    {
+      "id": "6",
+      "question": "What is the use of a useState hook in React?",
+      "answer": "It allows you to add state to functional components."
+    },
+    {
+      "id": "7",
+      "question": "What is a RESTful API?",
+      "answer": "An API that adheres to the principles of REST, enabling stateless client-server communication."
+    },
+    {
+      "id": "8",
+      "question": "What does SQL stand for?",
+      "answer": "Structured Query Language."
+    },
+    {
+      "id": "9",
+      "question": "What is cloud computing?",
+      "answer": "The delivery of computing services over the internet to enable scalability and flexibility."
+    },
+    {
+      "id": "10",
+      "question": "What is machine learning?",
+      "answer": "A branch of AI focused on building systems that learn from and make decisions based on data."
+    }
+  ]
+  
