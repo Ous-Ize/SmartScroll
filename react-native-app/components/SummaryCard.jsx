@@ -5,7 +5,7 @@ import { PaperProvider, Card } from 'react-native-paper';
 const SummaryCard = ({ summary: { title, text, image_source } }) => {
   return (
     <PaperProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView>
         <ScrollView>
           <Card
             style={{
