@@ -95,22 +95,7 @@ const Home = () => {
           data={[]} // Replace with actual quiz data
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                router.push({
-                  pathname: '/home/detail',
-                  params: {
-                    title: item.title,
-                    description: item.description,
-                  },
-                })
-              }
-            >
-              <View style={styles.quiz}>
-                <Text style={styles.quizTitle}>{item.title}</Text>
-                <Text style={styles.quizDescription}>{item.description}</Text>
-              </View>
-            </TouchableOpacity>
+            <Text>Quizzes are comming soon!</Text>
           )}
           ListEmptyComponent={() => (
             <EmptyState
