@@ -19,16 +19,15 @@ export default function App() {
             className="px-4 text-4xl text-black font-bold text-left"
             numberOfLines={2}
             >
-              Welcome {'\n'}to SmartScroll!
+              Welcome {'\n'}to Smart Scroll
             </Text>
             <CustomButton
-              title="Home"
-              handlePress={() => router.push('/home')}
-              containerStyles="w-full mt-7"
+              title="Continue with Email"
+              handlePress={() => router.push('/sign-in')}
+              containerStyles="w-full mt-7" 
              />
         </View>
       </ScrollView>
-      {/* <StatusBar backgroundColor='' style='dark' /> */}
     </SafeAreaView>
   );
 }
