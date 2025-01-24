@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 
 import { images } from '../../constants';
 import EmptyState from '../../components/EmptyState';
-import summaryData from '../../test-data/summary.json';
+// import summaryData from '../../test-data/summary.json';
 import flashcardData from '../../test-data/flashcards.json';
 import SummaryCard from '../../components/SummaryCard';
 import FlashcardCard from '../../components/FlashcardCard';
@@ -22,13 +22,35 @@ import FlashcardCard from '../../components/FlashcardCard';
 
 
 const Home = () => {
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedButton, setSelectedButton] = useState('summaries'); // Tracks selected button
+  const [selectedButton, setSelectedButton] = useState('summaries'); 
+  const [summaryData, setSummaryData] = useState([]);
+  const [error, setError] = useState(null);
+
+  const fetchSummaries = async () => {
+    setRefreshing(true);
+    try {
+      // Make sure the URL points to your running FastAPI backend
+      const response = await fetch('http://127.0.0.1:8000/summaries');
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      setSummaryData(data);
+    } catch (err) {
+      console.error('Fetch Error:', err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSummaries();
+  }, []);
 
   const onRefresh = async () => {
-    setRefreshing(true);
-    // Add logic to refresh content based on selected button
-    setRefreshing(false);
+    fetchSummaries();
   };
 
   const handleButtonPress = (buttonName) => {
