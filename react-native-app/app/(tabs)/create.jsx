@@ -3,6 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images, icons } from '../../constants'
 import CustomButton from '../../components/CustomButton';
+import FormField from '../../components/FormFieldCreate';
 import { Redirect, router } from 'expo-router';
 import { useState } from "react";
 import * as DocumentPicker from 'expo-document-picker';
@@ -11,6 +12,7 @@ import { Alert } from 'react-native';
 const Create = () => {
   const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
+    title: "",
     pdf: null,
   });
   const openPicker = async () => {
@@ -41,7 +43,8 @@ const Create = () => {
   };
 
   const submit = async () => {
-    if (!form.pdf) {
+    if (!form.pdf |
+      (form.title === "")) {
       return Alert.alert('Error', 'Please select a PDF file before submitting.');
     }
 
@@ -55,7 +58,7 @@ const Create = () => {
       Alert.alert('Error', 'Failed to upload the PDF.');
     } finally {
       setForm({
-        title: 'Uploaded PDF',
+        title: "",
         pdf: null,
       });
 
@@ -79,8 +82,15 @@ const Create = () => {
         <View >
           <Text style={{fontSize: '20', fontWeight: '400', color: 'rgb(90,90,90)'}} className="justify-center items-center mt-6 mx-20 text-center">Let AI generate learning content for you!</Text>
         </View>
+        <FormField
+          title="Title"
+          value={form.title}
+          placeholder="Give your material a title..."
+          handleChangeText={(e) => setForm({ ...form, title: e })}
+          otherStyles="mt-10"
+        />
       </View>
-      <View className="justify-center items-center mt-[130px]">
+      <View className="justify-center items-center mt-[20px]">
         <View className="mb-20">
         {form.pdf ? (
             <View
