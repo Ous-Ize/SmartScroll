@@ -2,6 +2,7 @@ import openai
 import json
 import re
 from typing import List, Dict
+from Backend.app.smartscroll_features.learning_materials import Summary, Flashcard, Quiz
 
 
 class OpenAIFeaturesGenerator:
@@ -14,7 +15,7 @@ class OpenAIFeaturesGenerator:
         """
         openai.api_key = api_key
         self.__text: str = ""
-        self.__summary: str = ""
+        self.__summary: Dict = dict()
         self.__flashcards: List[Dict] = list()
         self.__quizzes: List[Dict] = list()
 
@@ -25,10 +26,10 @@ class OpenAIFeaturesGenerator:
 
     @summary.setter
     def summary(self, value):
-        if isinstance(value, str):  # Ensure it's a dictionary
+        if isinstance(value, dict):  # Ensure it's a dictionary
             self.__summary = value
         else:
-            raise ValueError("Summary must be a string.")
+            raise ValueError("Summary must be a dictionary.")
 
     # Getter and Setter for __flashcards
     @property
@@ -69,7 +70,7 @@ class OpenAIFeaturesGenerator:
         """
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
@@ -97,8 +98,9 @@ class OpenAIFeaturesGenerator:
             Please return the output in JSON format with the key 'summary'.
             
             Example:
-            {{
-              "summary": "text of the summary"
+            {{ "summary":
+              {{"summary_text": "text of the summary",
+              "title": "title of the summary"}}
             }}
             Text: {text}
             """
@@ -206,7 +208,9 @@ class OpenAIFeaturesGenerator:
             prompt = self.generate_prompt(task, text)
             response = self.get_openai_response(prompt, max_tokens=max_tokens,
                                                 temperature=temperature)
+
             cleaned_response = self.clean_response(response)
+
 
             # Store the result in the appropriate attribute
             if task == "summary":
@@ -225,3 +229,31 @@ class OpenAIFeaturesGenerator:
         except Exception as e:
             print(f"Error: {str(e)}")
             return False
+
+
+    def generate_all_features(self, text: str, max_tokens: int = 500, temperature: float = 0.7):
+        tasks = ["summary", "flashcards", "quizzes"]
+        for task in tasks:
+            self.generate_feature(task, text=text, max_tokens=max_tokens, temperature=temperature)
+
+
+    def get_learning_material(self, source):
+        summary = Summary(source, self.__text, self.__summary.get("title"), self.__summary.get("summary_text"))
+        flashcards = []
+        quizzes = []
+        for card in self.__flashcards:
+            flashcard_front = card.get("front")
+            flashcard_back = card.get("back")
+            flashcard = Flashcard(source, self.__text, flashcard_front, flashcard_back)
+            flashcards.append(flashcard)
+        for quiz in self.__quizzes:
+            question = quiz.get("question")
+            choices = quiz.get("choices")
+            answer = quiz.get("correct_answer")
+            quizz_material = Quiz(source, self.__text, question, choices, answer)
+            quizzes.append(quizz_material)
+        return summary, flashcards, quizzes
+
+
+
+

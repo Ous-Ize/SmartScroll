@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from pymongo.errors import CollectionInvalid
-from config import config
+from Backend.app.config import config
 
 class MongoDBHandler:
     '''Base class for accessing the MongoDB database'''
@@ -14,10 +14,13 @@ class MongoDBHandler:
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
         
-        self.__flashcard_required_fields = ["category", "question", "answer", "source"]
-        self.__summary_required_fields = ["category", "title", "text", "source"]
-        self.__quiz_required_fields = ["category", "question", "options", "index_answer", "source"]
-        self.__user_required_fields = ["username", "email", "password"]
+        self.__flashcard_required_fields = ["front", "back", "source"]
+        self.__summary_required_fields = ["summary", "title", "source"]
+        self.__quiz_required_fields = ["question", "choices", "correct_answer", "source"]
+        self.__user_required_fields = ["username", "first_name", "last_name", "birth_date", "email", "password"]
+        self.__user_files_required_fields = ["userId", "fileId"]
+
+
 
     def create_collection_if_not_exists(self, collection_name: str):
         '''Create a collection if it doesn't already exist'''
@@ -65,14 +68,20 @@ class MongoDBHandler:
             print(f"Document not inserted into '{collection_name}' collection due to validation failure.")
 
 
+    def insert_documents(self, collection: str, documents: list, required_fields: list, unique_field: str):
+        '''Insert multiple documents into the database.'''
+        for document in documents:
+            self.insert_document(collection, document, required_fields, unique_field)
+
+
     def insert_flashcard(self, document: dict):
         '''Insert a flashcard into the database'''
-        self.insert_document("flashcards", document, self.__flashcard_required_fields, "question")
+        self.insert_document("flashcards", document, self.__flashcard_required_fields, "front")
 
     
     def insert_summary(self, document: dict):
         '''Insert a summary into the database'''
-        self.insert_document("summaries", document, self.__summary_required_fields, "text")
+        self.insert_document("summaries", document, self.__summary_required_fields, "summary")
 
 
     def insert_quiz(self, document: dict):
@@ -83,6 +92,19 @@ class MongoDBHandler:
     def insert_user(self, document: dict):
         '''Insert a user into the database'''
         self.insert_document("users", document, self.__user_required_fields, "email")
+
+
+    def insert_flashcards(self, documents: list):
+        '''Insert multiple flashcards into the database.'''
+        self.insert_documents("flashcards", documents, self.__flashcard_required_fields, "front")
+
+    def insert_summaries(self, documents: list):
+        '''Insert multiple summaries into the database.'''
+        self.insert_documents("summaries", documents, self.__summary_required_fields, "summary")
+
+    def insert_quizzes(self, documents: list):
+        '''Insert multiple quizzes into the database.'''
+        self.insert_documents("quizzes", documents, self.__quiz_required_fields, "question")
 
 
     def update_document(self, collection_name: str, filter: dict, update: dict, required_fields: list):
