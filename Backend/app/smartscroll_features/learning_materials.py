@@ -10,20 +10,9 @@ class LearningMaterial:
     :param text: The original text content.
     """
 
-    def __init__(self, id: int, source: str, text: str):
-        self.__id: int = id
+    def __init__(self, source: str, text: str):
         self.__source: str = source
         self.__text: str = text
-
-    @property
-    def id(self):
-        return self.__id
-
-    @id.setter
-    def id(self, value):
-        if not isinstance(value, int):
-            raise TypeError("ID must be an integer")
-        self.__id = value
 
     @property
     def source(self):
@@ -46,7 +35,7 @@ class LearningMaterial:
         self.__text = value
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.__id}, source='{self.__source}')"
+        return f"{self.__class__.__name__}(source='{self.__source}')"
 
 
 class Summary(LearningMaterial):
@@ -59,9 +48,20 @@ class Summary(LearningMaterial):
     :param summary_text: The summarized text.
     """
 
-    def __init__(self, id: int, source: str, text: str, summary_text: str):
-        super().__init__(id, source, text)
+    def __init__(self, source: str, text: str, title: str, summary_text: str):
+        super().__init__(source, text)
+        self._title = title
         self._summary_text: str = summary_text
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        if not isinstance(value, str):
+            raise TypeError("title must be a string")
+        self._title = value
 
     @property
     def summary_text(self):
@@ -73,10 +73,18 @@ class Summary(LearningMaterial):
             raise TypeError("Summary text must be a string")
         self._summary_text = value
 
+    def to_dictionary(self):
+        document = {
+            "title": self.title,
+            "summary": self.summary_text,
+            "source": self.source
+        }
+        return document
+
     def __repr__(self):
         summary_preview = self._summary_text[:50] + "..." if len(
             self._summary_text) > 50 else self._summary_text
-        return f"{self.__class__.__name__}(id={self.id}, source='{self.source}', summary='{summary_preview}...')"
+        return f"{self.__class__.__name__}(source='{self.source}', summary='{summary_preview}...')"
 
 
 class Flashcard(LearningMaterial):
@@ -90,8 +98,8 @@ class Flashcard(LearningMaterial):
     :param back: The back (answer/definition) of the flashcard.
     """
 
-    def __init__(self, id: int, source: str, text: str, front: str, back: str):
-        super().__init__(id, source, text)
+    def __init__(self, source: str, text: str, front: str, back: str):
+        super().__init__(source, text)
         self._front: str = front
         self._back: str = back
 
@@ -115,8 +123,16 @@ class Flashcard(LearningMaterial):
             raise TypeError("Back text must be a string")
         self._back = value
 
+    def to_dictionary(self):
+        document = {
+            "front": self.front,
+            "back": self.back,
+            "source": self.source
+        }
+        return document
+
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id}, source='{self.source}', front='{self._front[:10]}...', back='{self._back[:10]}...')"
+        return f"{self.__class__.__name__}(source='{self.source}', front='{self._front[:10]}...', back='{self._back[:10]}...')"
 
 
 class Quiz(LearningMaterial):
@@ -131,8 +147,8 @@ class Quiz(LearningMaterial):
     :param answer: The correct answer (key from the choices dictionary).
     """
 
-    def __init__(self, id: int, source: str, text: str, question: str, choices: Dict[str, str], answer: str):
-        super().__init__(id, source, text)
+    def __init__(self, source: str, text: str, question: str, choices: Dict[str, str], answer: str):
+        super().__init__(source, text)
         self._question: str = question
         self._choices: Dict[str, str] = choices
         self._answer: str = answer
@@ -169,5 +185,15 @@ class Quiz(LearningMaterial):
             raise ValueError("Answer must be a valid key from choices")
         self._answer = value
 
+
+    def to_dictionary(self):
+        document = {
+            "question": self.question,
+            "choices": self.choices,
+            "correct_answer": self.answer,
+            "source": self.source
+        }
+        return document
+
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id}, source='{self.source}', question='{self._question}', answer='{self._answer}')"
+        return f"{self.__class__.__name__}(source='{self.source}', question='{self._question}', answer='{self._answer}')"
