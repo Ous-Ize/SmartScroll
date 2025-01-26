@@ -6,9 +6,8 @@ const FlashcardCard = ({ flashcard: { question, answer } }) => {
   const [flipped, setFlipped] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
 
-  const colors = ['#023047', '#fb8500', '#3a5a40'];
+  const colors = ['#34A0A4', '#168AAD', '#52B69A', '#52B69A'];
 
-  // Assign a random color on mount
   useEffect(() => {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     setBackgroundColor(randomColor);
@@ -29,14 +28,14 @@ const FlashcardCard = ({ flashcard: { question, answer } }) => {
                 marginTop: 2,
                 borderRadius: 20,
                 overflow: 'hidden',
-                backgroundColor: backgroundColor, // Apply the random background color
+                backgroundColor: backgroundColor, 
               }}
             >
               <View
                 style={{
-                  padding: 10,
+                  padding: 5,
                   paddingLeft: 15,
-                  paddingBottom: 15,
+                  paddingBottom: 5,
                   borderRadius: 20,
                   height: 220,
                   justifyContent: 'center',
@@ -66,7 +65,7 @@ const FlashcardCard = ({ flashcard: { question, answer } }) => {
                     color: '#FFFDF5',
                     marginHorizontal: 15
                   }}
-                  numberOfLines={3}
+                  numberOfLines={6}
                 >
                   {flipped ? answer : question}
                 </Text>

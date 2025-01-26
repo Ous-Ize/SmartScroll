@@ -14,9 +14,12 @@ import { router, useRouter } from 'expo-router';
 import { images } from '../../constants';
 import EmptyState from '../../components/EmptyState';
 // import summaryData from '../../test-data/summary.json';
-import flashcardData from '../../test-data/flashcards.json';
+// import flashcardData from '../../test-data/flashcards.json';
+import quizData from '../../test-data/quizzes.json';
 import SummaryCard from '../../components/SummaryCard';
 import FlashcardCard from '../../components/FlashcardCard';
+import { fetchUnsplashPhotos } from '../../services/unsplash';
+import QuizCard from '../../components/QuizCard';
 
 // import quizData from '../../test-data/quizzes.json'; // Mock data for quizzes!
 
@@ -26,20 +29,75 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedButton, setSelectedButton] = useState('summaries'); 
   const [summaryData, setSummaryData] = useState([]);
+  const [flashcardsData, setFlashcardsData] = useState([]);
+  const [quizzesData, setQuizzesData] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchSummaries = async () => {
     setRefreshing(true);
     try {
-      // Make sure the URL points to your running FastAPI backend
       const response = await fetch('http://127.0.0.1:8000/summaries');
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
       const data = await response.json();
-      setSummaryData(data);
+      const updatedData = await Promise.all(
+        data.map(async (summaryItem) => {
+          if (!summaryItem.title) {
+            return summaryItem;
+          }
+  
+          const photos = await fetchUnsplashPhotos(summaryItem.title, 1);
+  
+          if (photos.length > 0) {
+            summaryItem.image_source = photos[0].image_source;
+          }
+  
+          return summaryItem;
+        })
+      )
+      setSummaryData(updatedData);
     } catch (err) {
       console.error('Fetch Error:', err);
+      setError(err.message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const fetchFlashcards = async () => {
+    setRefreshing(true);
+    setError(null);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/flashcards');
+      if (!response.ok) {
+        throw new Error(`Flashcards fetch error: ${response.status}`);
+      }
+      const data = await response.json();
+      setFlashcardsData(data);
+      console.log(data)
+    } catch (err) {
+      console.error('Fetch Flashcards Error:', err);
+      setError(err.message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const fetchQuizzes = async () => {
+    setRefreshing(true);
+    setError(null);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/quizzes');
+      if (!response.ok) {
+        throw new Error(`Quizzes fetch error: ${response.status}`);
+      }
+      const data = await response.json();
+      setQuizzesData(data);
+      console.log(data)
+    } catch (err) {
+      console.error('Fetch Quizzes Error:', err);
+      setError(err.message);
     } finally {
       setRefreshing(false);
     }
@@ -49,13 +107,27 @@ const Home = () => {
     fetchSummaries();
   }, []);
 
-  const onRefresh = async () => {
-    fetchSummaries();
+  const onRefresh = () => {
+    if (selectedButton === 'summaries') {
+      fetchSummaries();
+    } else if (selectedButton === 'flashcards') {
+      fetchFlashcards();
+    } else if (selectedButton === 'quizzes') {
+      fetchQuizzes();
+    } else {
+      setRefreshing(false);
+    }
   };
 
-  const handleButtonPress = (buttonName) => {
+  const handleButtonPress = async (buttonName) => {
     setSelectedButton(buttonName);
-    console.log(`Navigating to ${buttonName}`);
+    if (buttonName === 'summaries') {
+      fetchSummaries();
+    } else if (buttonName === 'flashcards') {
+      fetchFlashcards();
+    } else if (buttonName === 'quizzes') {
+      fetchQuizzes();
+    }
   };
 
   const renderContent = () => {
@@ -64,7 +136,7 @@ const Home = () => {
         <FlatList
           className="h-[620px]"
           data={summaryData}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -96,8 +168,8 @@ const Home = () => {
       return (
         <FlatList
           className="h-[620px]"
-          data={flashcardData} 
-          keyExtractor={(item) => item.id}
+          data={flashcardsData} 
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => <FlashcardCard flashcard={item} />}
           ListEmptyComponent={() => (
             <EmptyState
@@ -114,10 +186,10 @@ const Home = () => {
       return (
         <FlatList
           className="h-[620px]"
-          data={[]} // Replace with actual quiz data
-          keyExtractor={(item) => item.id}
+          data={quizData}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <Text>Quizzes are comming soon!</Text>
+            <QuizCard quiz={item}/>
           )}
           ListEmptyComponent={() => (
             <EmptyState
@@ -156,7 +228,6 @@ const Home = () => {
         </View>
       </View>
 
-      {/* Transparent Buttons Section */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
@@ -222,7 +293,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 10, // Reduced margin to avoid excessive space
+    marginBottom: 10, 
   },
   button: {
     paddingVertical: 10,
@@ -234,8 +305,8 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   selectedButton: {
-    borderBottomWidth: 2, // Keep the line subtle
-    borderBottomColor: '#F58232', // Use a clear color for visibility
+    borderBottomWidth: 2, 
+    borderBottomColor: '#F58232', 
   },
   selectedButtonText: {
     color: '#F58232',
