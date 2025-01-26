@@ -1,7 +1,7 @@
 '''To run the backend app use "uvicorn main:app --reload" in the app folder. the app will run on http://127.0.0.1:8000
 '''
 from fastapi import FastAPI
-from routes.RESTApiHandler import FlashcardsRoutes, QuizzesRoutes, SummariesRoutes, UsersRoutes
+from Backend.app.routes.RESTApiHandler import FlashcardsRoutes, QuizzesRoutes, SummariesRoutes, UsersRoutes
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

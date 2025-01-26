@@ -1,0 +1,87 @@
+[
+    {
+      "_id": "64fdf2a1a24b1c21a123456c",
+      "question": "Which U.S. city is known as the 'Big Apple'?",
+      "choices": [
+        "Los Angeles",
+        "New York City",
+        "San Francisco",
+        "Seattle"
+      ],
+      "correct_answer": "New York City",
+      "source": "../pdfs/USCities.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a123456d",
+      "question": "Which of the following is a statically typed language?",
+      "choices": [
+        "JavaScript",
+        "Python",
+        "C Sharp",
+        "TypeScript"
+      ],
+      "correct_answer": "TypeScript",
+      "source": "../pdfs/ProgrammingLanguages.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a123456e",
+      "question": "Which JavaScript library is popular for building user interfaces?",
+      "choices": [
+        "React Native",
+        "Node.js",
+        "Angular Framework",
+        "Vue.js"
+      ],
+      "correct_answer": "React Native",
+      "source": "../pdfs/WebTechnologies.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a123456f",
+      "question": "Which protocol is commonly used for web traffic by default?",
+      "choices": [
+        "FTP File Transfer Protocol",
+        "HTTP Hypertext Transfer Protocol",
+        "SMTP Simple Mail Transfer Protocol",
+        "SSH Secure Shell"
+      ],
+      "correct_answer": "HTTP Hypertext Transfer Protocol",
+      "source": "../pdfs/NetworkProtocols.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a1234570",
+      "question": "Which data structure is typically used for a Breadth-First Search in a graph?",
+      "choices": [
+        "Priority Queue",
+        "Stack Data Structure",
+        "Hash Set",
+        "Queue Data Structure"
+      ],
+      "correct_answer": "Queue Data Structure",
+      "source": "../pdfs/AlgorithmsBasics.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a1234571",
+      "question": "Which of these CSS frameworks primarily uses a utility-first approach?",
+      "choices": [
+        "Bootstrap Framework",
+        "Tailwind CSS",
+        "Materialize CSS",
+        "Bulma CSS"
+      ],
+      "correct_answer": "Tailwind CSS",
+      "source": "../pdfs/CSSFrameworks.pdf"
+    },
+    {
+      "_id": "64fdf2a1a24b1c21a1234572",
+      "question": "Which version control system uses a local staging area before committing?",
+      "choices": [
+        "Subversion (SVN)",
+        "Git",
+        "Mercurial VCS",
+        "Concurrent Versions System (CVS)"
+      ],
+      "correct_answer": "Git",
+      "source": "../pdfs/VersionControl.pdf"
+    }
+  ]
+  

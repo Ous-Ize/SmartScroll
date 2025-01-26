@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+
+    <collection name="flashcards">
+        <field name="_id" />
+        <field name="front" />
+        <field name="back" />
+        <field name="source" />
+    </collection>
+
+    <collection name="summaries">
+        <field name="_id" />
+        <field name="summary" />
+        <field name="title" />
+        <field name="source" />
+    </collection>
+
+    <collection name="quizzes">
+        <field name="_id" />
+        <field name="question" />
+        <field name="choices" />
+        <field name="correct_answer" />
+        <field name="source" />
+    </collection>
+
+    <collection name="users">
+        <field name="_id" />
+        <field name="username" />
+        <field name="first_name" />
+        <field name="last_name" />
+        <field name="birth_date" />
+        <field name="email" />
+        <field name="password" />
+    </collection>
+
+</database>

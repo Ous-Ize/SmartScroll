@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from database.mongoDBHandler import db  # MongoDBHandler instance
+from Backend.app.database.mongoDBHandler import db  # MongoDBHandler instance
 from typing import Optional
 
 class BaseRoutes:
