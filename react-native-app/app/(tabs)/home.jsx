@@ -18,7 +18,7 @@ import flashcardData from '../../test-data/flashcards.json';
 import SummaryCard from '../../components/SummaryCard';
 import FlashcardCard from '../../components/FlashcardCard';
 
-// import quizData from '../../test-data/quizzes.json'; // Mock data for quizzes
+// import quizData from '../../test-data/quizzes.json'; // Mock data for quizzes!
 
 
 const Home = () => {
