@@ -3,5 +3,6 @@ import chatbot from "../assets/images/chatbot.png"
 import empty from "../assets/images/empty-box.png"
 import logo from "../assets/logo.png";
 import upload from "../assets/images/upload.png"
+import profile from "../assets/images/profile.png"
 
-export default { flame, chatbot, empty, logo, upload };
+export default { flame, chatbot, empty, logo, upload, profile };
