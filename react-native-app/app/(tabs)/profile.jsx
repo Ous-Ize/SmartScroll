@@ -9,6 +9,8 @@ import {
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
+import { Link} from 'expo-router';
+
 
 const Profile = () => {
   return (
@@ -43,7 +45,9 @@ const Profile = () => {
           <Text style={styles.sectionTitle}>App Controls</Text>
           <TouchableOpacity><Text style={styles.sectionItem}>Help</Text></TouchableOpacity>
           <TouchableOpacity><Text style={styles.sectionItem}>Reset data</Text></TouchableOpacity>
-          <TouchableOpacity><Text style={styles.sectionItem}>Sign Out</Text></TouchableOpacity>
+          <Link href="..//index.jsx">
+          Sign out
+          </Link>
         </View>
       </ScrollView>
 
