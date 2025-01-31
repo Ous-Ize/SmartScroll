@@ -18,7 +18,7 @@ class DataProcessor:
     def generate_content(self):
         pdf_as_string = self._pdf_reader.read_pdf_as_string()
         file_id = self._pdf_reader.store_pdf()
-
+        file_id = str(file_id)
         self._feature_generator.generate_all_features(pdf_as_string)
         summary, flashcards, quizzes = self._feature_generator.get_learning_material(source=file_id)
 

@@ -1,6 +1,11 @@
-from fastapi import APIRouter, HTTPException, Query
-from Backend.app.database.mongoDBHandler import db  # MongoDBHandler instance
+from fastapi import APIRouter, HTTPException, Query, UploadFile, File
+from database.mongoDBHandler import db  # MongoDBHandler instance
 from typing import Optional
+import random
+import os
+import shutil
+from config import config
+
 
 class BaseRoutes:
     def __init__(self, collection_name, db_handler):
@@ -64,6 +69,57 @@ class BaseRoutes:
             """Delete documents based on a filter."""
             self.db_handler.delete_document(self.collection_name, filter)
             return {"message": f"{self.collection_name.capitalize()} deleted successfully."}
+
+
+
+class ExtraRoutes:
+    def __init__(self):
+        self.router = APIRouter()
+        self.setup_routes()
+
+    def setup_routes(self):
+        @self.router.get("/newsfeed", tags=["Newsfeed"])
+        async def get_random_content():
+            """
+            Fetch two random flashcards, two random quizzes, and two random summaries.
+            """
+            try:
+                flashcards = list(db.find_documents("flashcards"))
+                quizzes = list(db.find_documents("quizzes"))
+                summaries = list(db.find_documents("summaries"))
+
+                selected_flashcards = random.sample(flashcards, min(2, len(flashcards)))
+                selected_quizzes = random.sample(quizzes, min(2, len(quizzes)))
+                selected_summaries = random.sample(summaries, min(2, len(summaries)))
+
+                combined_results = selected_flashcards + selected_quizzes + selected_summaries
+                random.shuffle(combined_results)  # Shuffle to randomize order
+
+                return [{"_id": str(doc["_id"]), **doc} for doc in combined_results]
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
+
+        @self.router.post("/upload-pdf", tags=["Upload"])
+        async def upload_pdf(file: UploadFile = File(...)):
+            """
+            Upload a PDF file and store it localy.
+            """
+            if not file.filename.lower().endswith(".pdf"):
+                raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
+
+            try:
+                file_path = os.path.join(config.UPLOAD_FOLDER, file.filename)
+
+                # Save file locally
+                with open(file_path, "wb") as buffer:
+                    shutil.copyfileobj(file.file, buffer)
+
+                return {"message": "File uploaded successfully", "filename": file.filename, "path": file_path}
+
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
+
+
 
 
 class FlashcardsRoutes(BaseRoutes):
