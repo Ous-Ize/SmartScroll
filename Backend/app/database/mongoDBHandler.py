@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from pymongo.errors import CollectionInvalid
-from Backend.app.config import config
+from config import config
 
 class MongoDBHandler:
     '''Base class for accessing the MongoDB database'''
