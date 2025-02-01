@@ -8,24 +8,27 @@ import CustomButton from '../components/CustomButton';
 export default function App() {
   return (
     <SafeAreaView className="bg-background h-full">
-      <ScrollView contentContainerStyle={{ height: '100%'}}>
-        <View className="items-start px-6 py-[300px]">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className="flex-1 items-center px-6 py-[180]">
           <Image 
             source={images.logo} 
             resizeMode="contain" 
             className="px-4 w-[200px] h-[200px]"
           />
           <Text 
-            className="px-4 text-4xl text-black font-bold text-left"
-            numberOfLines={2}
-            >
-              Welcome {'\n'}to Smart Scroll
+            className="px-4 text-4xl text-black font-bold text-center mt-4">
+              Welcome to Smart Scroll
             </Text>
             <CustomButton
-              title="Continue with Email"
-              handlePress={() => router.push('/sign-in')}
-              containerStyles="w-full mt-7" 
-             />
+            title="Continue with Email"
+            handlePress={() => router.push('/sign-in')}
+            containerStyles="w-full mt-10" 
+          />
+        </View>
+        <View className="px-6">
+          <Text className="text-center font-semibold">
+            Smart Scroll can make mistakes! check important information.
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
