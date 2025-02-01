@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants';
@@ -37,7 +37,7 @@ const SignIn = () => {
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
+            otherStyles={styles.formField}
             keyboardType="email-address"
           />
           
@@ -45,7 +45,7 @@ const SignIn = () => {
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
+            otherStyles={styles.formField}
           />
           <CustomButton 
             title="Sign In"
@@ -67,5 +67,11 @@ const SignIn = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  formField: {
+    padding: 8,  
+  },
+});
 
 export default SignIn

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants';
@@ -30,7 +30,7 @@ const SignUp= () => {
             resizeMode="contain" 
             className="w-[120px] h-[120px]"
           />  
-          <Text className="text-2xl text-black font-semibold mt-10">
+          <Text className="text-2xl text-black font-semibold mt-6 mb-5">
             Sign up to Smart Scroll
           </Text>
           </View>
@@ -39,21 +39,21 @@ const SignUp= () => {
             title="First Name"
             value={form.firstName}
             handleChangeText={(e) => setForm({ ...form, firstName: e })}
-            otherStyles="mt-10"
+            otherStyles={styles.formField}
           />
           
           <FormField 
             title="Last Name"
             value={form.lastName}
             handleChangeText={(e) => setForm({ ...form, lastName: e })}
-            otherStyles="mt-10"
+            otherStyles={styles.formField}
           />
 
           <FormField 
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
+            otherStyles={styles.formField}
             keyboardType="email-address"
           />
           
@@ -61,7 +61,7 @@ const SignUp= () => {
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
+            otherStyles={styles.formField}
           />
           <CustomButton 
             title="Sign Up"
@@ -83,5 +83,12 @@ const SignUp= () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  formField: {
+    padding: 8,  
+  },
+});
+
 
 export default SignUp
