@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query, UploadFile, File
 from database.mongoDBHandler import db  # MongoDBHandler instance
+from smartscroll_features.data_processor import DataProcessor
 from typing import Optional
 import random
 import os
@@ -110,11 +111,22 @@ class ExtraRoutes:
             try:
                 file_path = os.path.join(config.UPLOAD_FOLDER, file.filename)
 
-                # Save file locally
+                #Save file locally
                 with open(file_path, "wb") as buffer:
                     shutil.copyfileobj(file.file, buffer)
 
-                return {"message": "File uploaded successfully", "filename": file.filename, "path": file_path}
+                dp = DataProcessor(file_path)
+                summary, flashcards, quizzes = dp.generate_content()
+
+                response = {"status": "success",
+                         "message": "File uploaded and content generated successfully",
+                         "filename": file.filename,
+                         "path": file_path,
+                         "content": [summary, flashcards, quizzes]}
+
+                #print(response)
+
+                return response
 
             except Exception as e:
                 raise HTTPException(status_code=500, detail=str(e))

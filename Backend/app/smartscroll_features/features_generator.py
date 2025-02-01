@@ -2,7 +2,7 @@ import openai
 import json
 import re
 from typing import List, Dict
-from Backend.app.smartscroll_features.learning_materials import Summary, Flashcard, Quiz
+from smartscroll_features.learning_materials import Summary, Flashcard, Quiz
 
 
 class OpenAIFeaturesGenerator:
