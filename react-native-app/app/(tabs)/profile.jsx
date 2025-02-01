@@ -23,7 +23,7 @@ const Profile = () => {
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView contentContainerStyle={styles.content} className="mt-7"> 
         <View style={styles.profileContainer}>
           <Image source={images.profile} style={styles.profileImage} />
           <Text style={styles.profileName}>Max Mustermann</Text>
@@ -43,11 +43,9 @@ const Profile = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>App Controls</Text>
-          <TouchableOpacity><Text style={styles.sectionItem}>Help</Text></TouchableOpacity>
-          <TouchableOpacity><Text style={styles.sectionItem}>Reset data</Text></TouchableOpacity>
-          <Link href="..//index.jsx">
-          Sign out
-          </Link>
+          <Link href="..//index.jsx" style={styles.sectionItem}>Help</Link>
+          <Link href="..//index.jsx" style={styles.sectionItem}>Reset data</Link>
+          <Link href="..//index.jsx" style={styles.sectionItem}>Sign out</Link>
         </View>
       </ScrollView>
 
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 25,
     marginTop: 10,
   },
   profileImage: {
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   section: {
-    marginBottom: 30,
+    marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 20,
