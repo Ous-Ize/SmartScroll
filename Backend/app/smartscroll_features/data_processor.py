@@ -1,7 +1,7 @@
-from Backend.app.smartscroll_features.features_generator import OpenAIFeaturesGenerator
-from Backend.app.file_handler.pdf_reader import *
-from Backend.app.database.mongoDBHandler import MongoDBHandler
-from Backend.app.config import config
+from smartscroll_features.features_generator import OpenAIFeaturesGenerator
+from file_handler.pdf_reader import *
+from database.mongoDBHandler import MongoDBHandler
+from config import config
 
 
 class DataProcessor:
@@ -34,7 +34,16 @@ class DataProcessor:
         self._db_handler.insert_flashcards(flashcards_documents)
         self._db_handler.insert_summary(summary_document)
         self._db_handler.insert_quizzes(quizzes_documents)
-
+        #Convert `_id` to string if it exists
+        if "_id" in summary_document:
+            summary_document["_id"] = str(summary_document["_id"])
+        for doc in flashcards_documents:
+            if "_id" in doc:
+                doc["_id"] = str(doc["_id"])
+        for doc in quizzes_documents:
+            if "_id" in doc:
+                doc["_id"] = str(doc["_id"])
+        return summary_document, flashcards_documents, quizzes_documents
 
 
 if __name__ == '__main__':

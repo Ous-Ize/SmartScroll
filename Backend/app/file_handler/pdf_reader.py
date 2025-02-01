@@ -3,7 +3,7 @@ import fitz  # PyMuPDF
 from typing import List, Dict
 from pymongo import MongoClient
 from gridfs import GridFS
-from Backend.app.database.mongoDBHandler import MongoDBHandler
+from database.mongoDBHandler import MongoDBHandler
 
 
 class PDFReaderError(Exception):
