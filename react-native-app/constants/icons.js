@@ -1,5 +1,5 @@
 import home from "../assets/icons/home.png";
-import bookmark from "../assets/icons/search.png"
+import search from "../assets/icons/search.png"
 import create from "../assets/icons/add.png"
 import profile from "../assets/icons/user.png"
 import back from "../assets/icons/back.png"
@@ -10,7 +10,7 @@ import eye from "../assets/icons/eye.png";
 
 export default {
   home,
-  bookmark,
+  search,
   create,
   profile,
   back,
