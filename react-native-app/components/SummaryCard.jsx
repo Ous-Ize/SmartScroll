@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SafeAreaView, ScrollView, Text, ImageBackground, View } from 'react-native';
 import { PaperProvider, Card } from 'react-native-paper';
 
-const SummaryCard = ({ summary: { title, text, image_source } }) => {
+const SummaryCard = ({ summary: { title, summary, image_source } }) => {
   return (
     <PaperProvider>
       <SafeAreaView>

@@ -3,13 +3,13 @@ import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 
 const DetailScreen = () => {
-  const { title, text, image_source } = useLocalSearchParams();
+  const { title, summary, image_source } = useLocalSearchParams();
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <Image source={{ uri: image_source }} style={styles.image} />
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}>{summary}</Text>
     </ScrollView>
   );
 };

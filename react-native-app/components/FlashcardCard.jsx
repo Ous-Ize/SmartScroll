@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { PaperProvider, Card } from 'react-native-paper';
 
-const FlashcardCard = ({ flashcard: { question, answer } }) => {
+const FlashcardCard = ({ flashcard: { front, back } }) => {
   const [flipped, setFlipped] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
 
@@ -67,7 +67,7 @@ const FlashcardCard = ({ flashcard: { question, answer } }) => {
                   }}
                   numberOfLines={6}
                 >
-                  {flipped ? answer : question}
+                  {flipped ? back : front}
                 </Text>
               </View>
             </Card>
