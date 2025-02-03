@@ -43,12 +43,16 @@ const Home = () => {
       const data = await response.json();
       const updatedData = await Promise.all(
         data.map(async (summaryItem) => {
-          if (!summaryItem.title) {
-            return summaryItem;
+          // if (!summaryItem.title) {
+          //   return summaryItem;
+          // }
+          var photos = "";
+          if(summaryItem.title === null){
+            photos = await fetchUnsplashPhotos("Nice Picture", 1);
+          } else{
+            photos = await fetchUnsplashPhotos(summaryItem.title, 1);
           }
-  
-          const photos = await fetchUnsplashPhotos(summaryItem.title, 1);
-  
+
           if (photos.length > 0) {
             summaryItem.image_source = photos[0].image_source;
           }
@@ -56,6 +60,7 @@ const Home = () => {
           return summaryItem;
         })
       )
+      console.log(updatedData);
       setSummaryData(updatedData);
     } catch (err) {
       console.error('Fetch Error:', err);
@@ -144,7 +149,7 @@ const Home = () => {
                   pathname: '/home/detail',
                   params: {
                     title: item.title,
-                    text: item.text,
+                    summary: item.summary,
                     image_source: item.image_source,
                   },
                 })
@@ -186,7 +191,7 @@ const Home = () => {
       return (
         <FlatList
           className="h-[620px]"
-          data={quizData}
+          data={quizzesData}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <QuizCard quiz={item}/>

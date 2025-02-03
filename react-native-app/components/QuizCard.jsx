@@ -7,7 +7,7 @@ import {
   StyleSheet, 
   TouchableOpacity 
 } from 'react-native';
-import { PaperProvider, Card } from 'react-native-paper';
+import { Provider as PaperProvider, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 
 const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
@@ -23,13 +23,13 @@ const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
     setBackgroundColor(randomColor);
   }, []);
 
-  const handleChoicePress = (choice) => {
-    if (hasAnswered) return; 
+  const handleChoicePress = (choiceKey) => {
+    if (hasAnswered) return;
 
-    setSelectedChoice(choice);
+    setSelectedChoice(choiceKey);
     setHasAnswered(true);
 
-    if (choice === correct_answer) {
+    if (choiceKey === correct_answer) {
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
@@ -46,19 +46,20 @@ const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
               marginTop: 2,
               borderRadius: 20,
               overflow: 'hidden',
-              backgroundColor: backgroundColor
+              backgroundColor: backgroundColor,
             }}
           >
             <View style={styles.cardContainer}>
               <Text style={styles.questionText}>{question}</Text>
 
-              {choices && choices.map((choice, index) => {
+              {/* Iterate over the choices object */}
+              {choices && Object.entries(choices).map(([choiceKey, choiceText]) => {
                 let buttonStyle = [styles.choiceButton];
 
                 if (hasAnswered) {
-                  if (choice === correct_answer) {
+                  if (choiceKey === correct_answer) {
                     buttonStyle.push(styles.correctChoiceButton);
-                  } else if (choice === selectedChoice) {
+                  } else if (choiceKey === selectedChoice) {
                     buttonStyle.push(styles.incorrectChoiceButton);
                   } else {
                     buttonStyle.push(styles.disabledChoiceButton);
@@ -67,20 +68,22 @@ const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
 
                 return (
                   <TouchableOpacity 
-                    key={index}
+                    key={choiceKey}
                     style={buttonStyle}
-                    onPress={() => handleChoicePress(choice)}
+                    onPress={() => handleChoicePress(choiceKey)}
                   >
-                    <Text style={styles.choiceText}>{choice}</Text>
+                    <Text style={styles.choiceText}>
+                      {choiceKey.toUpperCase()}. {choiceText}
+                    </Text>
                   </TouchableOpacity>
                 );
               })}
 
               {hasAnswered && (
                 <Text style={styles.feedbackText}>
-                  {isCorrect 
-                    ? "Correct! ✅" 
-                    : `Incorrect ❌ The right answer is: ${correct_answer}`
+                  {isCorrect
+                    ? "Correct! ✅"
+                    : `Incorrect ❌ The right answer is: ${correct_answer.toUpperCase()}. ${choices[correct_answer]}`
                   }
                 </Text>
               )}
@@ -116,16 +119,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 5,
     borderRadius: 10,
-    padding: 10
+    padding: 10,
   },
   correctChoiceButton: {
-    backgroundColor: 'rgba(76, 175, 80, 0.8)' 
+    backgroundColor: 'rgba(76, 175, 80, 0.8)', // green
   },
   incorrectChoiceButton: {
-    backgroundColor: 'rgba(244, 67, 54, 0.8)' 
+    backgroundColor: 'rgba(244, 67, 54, 0.8)', // red
   },
   disabledChoiceButton: {
-    opacity: 0.4
+    opacity: 0.4,
   },
   choiceText: {
     color: '#FFFDF5',
@@ -136,8 +139,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     color: '#FFFDF5',
     fontStyle: 'italic',
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 
 export default QuizCard;
