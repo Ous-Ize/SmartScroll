@@ -6,6 +6,8 @@ import random
 import os
 import shutil
 from config import config
+from pydantic import BaseModel
+from smartscroll_chatbot.chatbot import Chatbot
 
 
 class BaseRoutes:
@@ -14,6 +16,7 @@ class BaseRoutes:
         self.collection_name = collection_name
         self.db_handler = db_handler
         self.setup_routes()
+        self.chatbot_instance = Chatbot(api_key=config.OPENAI_API_KEY)
 
     def setup_routes(self):
         @self.router.get("/", tags=[self.collection_name.capitalize()])
@@ -71,6 +74,24 @@ class BaseRoutes:
             self.db_handler.delete_document(self.collection_name, filter)
             return {"message": f"{self.collection_name.capitalize()} deleted successfully."}
 
+        @self.router.post("/chat", response_model=ChatResponse, tags=["Chatbot"])
+        async def chat_endpoint(chat_request: ChatRequest):
+            """
+            Endpoint to receive a user's message and return a chatbot response.
+            """
+            try:
+                answer = self.chatbot_instance.ask(chat_request.message)
+                return ChatResponse(response=answer)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+class ChatResponse(BaseModel):
+    response: str
 
 
 class ExtraRoutes:
