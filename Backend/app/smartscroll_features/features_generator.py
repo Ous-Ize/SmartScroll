@@ -94,15 +94,19 @@ class OpenAIFeaturesGenerator:
         """
         if task == "summary":
             return f"""
-            Summarize the following text in a concise manner:
-            Please return the output in JSON format with the key 'summary'.
-            
+            Please summarize the following text in an engaging, storytelling manner similar to Medium articles. The summary should be informative yet captivating, using a narrative approach to keep the reader interested. 
+
+            Please return the output in JSON format with the key 'summary'. 
+
             Example:
             {{ "summary":
-              {{"summary_text": "text of the summary",
-              "title": "title of the summary"}}
+              {{"summary_text": "A well-structured summary that highlights the key points while maintaining an engaging and readable flow",
+              "title": "A compelling, click-worthy title summarizing the essence of the text"}}
             }}
-            Text: {text}
+
+            Ensure the title is concise yet attention-grabbing, and the summary text should be between 300-500 words, capturing the core ideas while maintaining a smooth, engaging reading experience.
+            Format the text naturally with proper paragraph spacing.
+            Text to summarize: {text}
             """
         elif task == "flashcards":
             return f"""
@@ -204,10 +208,19 @@ class OpenAIFeaturesGenerator:
         :return: Boolean indicating whether the task was performed successfully.
         :raises: Exception for any unexpected errors during generation.
         """
+        max_token_settings = {
+        "summary": 5000,  
+        "flashcards": 500,  
+        "quizzes": 500, 
+        }
+        max_tokens = max_token_settings.get(task, 500)
+        
         try:
             prompt = self.generate_prompt(task, text)
             response = self.get_openai_response(prompt, max_tokens=max_tokens,
                                                 temperature=temperature)
+            
+            print("Raw OpenAI Response:\n", response)
 
             cleaned_response = self.clean_response(response)
 

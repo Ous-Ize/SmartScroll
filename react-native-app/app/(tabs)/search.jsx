@@ -16,11 +16,11 @@ const Search = () => {
   return (
     <SafeAreaView className="bg-background h-full">
       <View style={styles.header}>
-        <Image source={images.chatbot} style={styles.icon} resizeMode="contain" />
+        {/* <Image source={images.chatbot} style={styles.icon} resizeMode="contain" />
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsText}>+100</Text>
           <Image source={images.flame} style={styles.icon} resizeMode="contain" />
-        </View>
+        </View> */}
       </View>
 
     </SafeAreaView>

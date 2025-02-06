@@ -89,6 +89,14 @@ class ExtraRoutes:
                 quizzes = list(db.find_documents("quizzes"))
                 summaries = list(db.find_documents("summaries"))
 
+                # Add a type field to each document
+                for doc in flashcards:
+                    doc["type"] = "flashcard"
+                for doc in quizzes:
+                    doc["type"] = "quiz"
+                for doc in summaries:
+                    doc["type"] = "summary"
+
                 selected_flashcards = random.sample(flashcards, min(2, len(flashcards)))
                 selected_quizzes = random.sample(quizzes, min(2, len(quizzes)))
                 selected_summaries = random.sample(summaries, min(2, len(summaries)))
