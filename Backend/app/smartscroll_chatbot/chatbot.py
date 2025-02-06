@@ -8,7 +8,7 @@ class Chatbot:
         Initializes the Chatbot with the provided OpenAI API key.
         """
         openai.api_key = api_key
-        # Optionally, you can initialize a conversation history
+        # initializing a conversation history
         self.conversation_history = [
             {"role": "system", "content": "You are a helpful assistant."}]
 
