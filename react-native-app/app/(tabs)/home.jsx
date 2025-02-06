@@ -6,6 +6,7 @@ import {
   RefreshControl,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,11 +28,59 @@ import QuizCard from '../../components/QuizCard';
 const Home = () => {
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedButton, setSelectedButton] = useState('summaries'); 
+  const [selectedButton, setSelectedButton] = useState('all'); 
   const [summaryData, setSummaryData] = useState([]);
   const [flashcardsData, setFlashcardsData] = useState([]);
   const [quizzesData, setQuizzesData] = useState([]);
   const [error, setError] = useState(null);
+  const [newsfeedData, setNewsfeedData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [fetchingMore, setFetchingMore] = useState(false);
+
+  const API_URL = 'http://127.0.0.1:8000/newsfeed';
+
+  const fetchAll = async (pageToFetch = 1, append = false) => {
+    try {
+      if (pageToFetch === 1) setRefreshing(true);
+      else setFetchingMore(true);
+
+      const response = await fetch(`${API_URL}?page=${pageToFetch}`);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+
+      // Optional: If you need to fetch Unsplash images for summaries
+      const updatedData = await Promise.all(
+        data.map(async (item) => {
+          if (item.type === 'summary') {
+            let photos;
+            if (!item.title) {
+              photos = await fetchUnsplashPhotos("Nice Picture", 1);
+            } else {
+              photos = await fetchUnsplashPhotos(item.title, 1);
+            }
+            if (photos.length > 0) {
+              item.image_source = photos[0].image_source;
+            }
+          }
+          return item;
+        })
+      );
+
+      // If append flag is true, append the new data to the existing list; otherwise replace
+      setNewsfeedData((prevData) =>
+        append ? [...prevData, ...updatedData] : updatedData
+      );
+
+      setPage(pageToFetch);
+    } catch (err) {
+      console.error('Fetch Error:', err);
+    } finally {
+      setRefreshing(false);
+      setFetchingMore(false);
+    }
+  };
 
   const fetchSummaries = async () => {
     setRefreshing(true);
@@ -109,19 +158,27 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchSummaries();
+    fetchAll();
   }, []);
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     if (selectedButton === 'summaries') {
-      fetchSummaries();
+      await fetchSummaries();
     } else if (selectedButton === 'flashcards') {
-      fetchFlashcards();
+      await fetchFlashcards();
     } else if (selectedButton === 'quizzes') {
-      fetchQuizzes();
+      await fetchQuizzes();
+    } else if (selectedButton ==='all') {
+      await fetchAll(1, false);
     } else {
       setRefreshing(false);
     }
+  };
+
+  const fetchMoreData = async () => {
+    if (fetchingMore) return;
+    const nextPage = page + 1;
+    await fetchAll(nextPage, true);
   };
 
   const handleButtonPress = async (buttonName) => {
@@ -132,6 +189,8 @@ const Home = () => {
       fetchFlashcards();
     } else if (buttonName === 'quizzes') {
       fetchQuizzes();
+    } else if (buttonName === 'all') {
+      fetchAll();
     }
   };
 
@@ -143,7 +202,8 @@ const Home = () => {
           data={summaryData}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <TouchableOpacity
+            <SummaryCard
+              summary={item}
               onPress={() =>
                 router.push({
                   pathname: '/home/detail',
@@ -154,9 +214,7 @@ const Home = () => {
                   },
                 })
               }
-            >
-              <SummaryCard summary={item} />
-            </TouchableOpacity>
+            />
           )}
           ListEmptyComponent={() => (
             <EmptyState
@@ -207,6 +265,57 @@ const Home = () => {
           }
         />
       );
+    } else if (selectedButton === 'all') {
+      return (
+        <FlatList
+          data={newsfeedData}
+          keyExtractor={(item, index) => `${item._id}-${index}`}
+          renderItem={({ item }) => {
+            switch (item.type) {
+              case 'flashcard':
+                return <FlashcardCard flashcard={item} />;
+              case 'quiz':
+                return <QuizCard quiz={item} />;
+              case 'summary':
+                return (
+                  <SummaryCard
+                    summary={item}
+                    onPress={() =>
+                      router.push({
+                        pathname: '/home/detail',
+                        params: {
+                          title: item.title,
+                          summary: item.summary,
+                          image_source: item.image_source,
+                        },
+                      })
+                    }
+                  />
+                );
+              default:
+                return null;
+            }
+          }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          onEndReached={fetchMoreData}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={() =>
+            fetchingMore ? (
+              <View style={{ padding: 16 }}>
+                <ActivityIndicator size="small" />
+              </View>
+            ) : null
+          }
+          ListEmptyComponent={() => (
+            <EmptyState
+              title="No Newsfeed Items Found"
+              subtitle="Come back later!"
+            />
+          )}
+        />
+      );
     }
   };
   
@@ -234,6 +343,23 @@ const Home = () => {
       </View>
 
       <View style={styles.buttonContainer}>
+      <TouchableOpacity
+          style={[
+            styles.button,
+            selectedButton === 'all' && styles.selectedButton,
+          ]}
+          onPress={() => handleButtonPress('all')}
+          activeOpacity={1}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              selectedButton === 'all' && styles.selectedButtonText,
+            ]}
+          >
+            All
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={[
             styles.button,
