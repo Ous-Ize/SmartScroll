@@ -1,16 +1,16 @@
 from fastapi import APIRouter, HTTPException
 from database.mongoDBHandler import db
-from user_management import User
-from user_management import Authenticator
+from user_management.User import User
+from user_management.Authenticator import Authenticator
 
 users_collection = db.get_collection("users")
 
 class UserRoutes:
     def __init__(self):
-        self.router = APIRouter()
+        self.router = APIRouter(prefix="/users", tags=["Users"])
         self.authenticator = Authenticator()
-        self.router.post("/register")(self.register)
-        self.router.post("/login")(self.login)
+        self.router.post("/register", summary="Register a new user")(self.register)
+        self.router.post("/login", summary="Login a user")(self.login)
 
     def register(self, user: User):
         """Register a new user."""
