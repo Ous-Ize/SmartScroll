@@ -47,8 +47,6 @@ class BaseRoutes:
                 self.db_handler.insert_summary(document)
             elif self.collection_name == "quizzes":
                 self.db_handler.insert_quiz(document)
-            elif self.collection_name == "users":
-                self.db_handler.insert_user(document)
             else:
                 raise HTTPException(status_code=400, detail="Unknown collection")
             return {"message": f"{self.collection_name.capitalize()} created successfully."}
@@ -62,8 +60,6 @@ class BaseRoutes:
                 self.db_handler.update_summaries(filter, update)
             elif self.collection_name == "quizzes":
                 self.db_handler.update_quizzes(filter, update)
-            elif self.collection_name == "users":
-                self.db_handler.update_users(filter, update)
             else:
                 raise HTTPException(status_code=400, detail="Unknown collection")
             return {"message": f"{self.collection_name.capitalize()} updated successfully."}
@@ -175,7 +171,3 @@ class QuizzesRoutes(BaseRoutes):
     def __init__(self):
         super().__init__("quizzes", db)
 
-
-class UsersRoutes(BaseRoutes):
-    def __init__(self):
-        super().__init__("users", db)
