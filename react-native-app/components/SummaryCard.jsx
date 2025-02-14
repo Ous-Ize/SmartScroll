@@ -14,6 +14,7 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
                 marginTop: 2,
                 borderRadius: 12,
                 overflow: 'hidden',
+                height: 250
               }}
             >
               <ImageBackground
@@ -55,7 +56,7 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
                       fontFamily: 'Helvetica',
                       flexWrap: 'wrap',
                     }}
-                    numberOfLines={3}
+                    numberOfLines={4}
                   >
                     {title}
                   </Text>

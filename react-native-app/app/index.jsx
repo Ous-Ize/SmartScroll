@@ -24,9 +24,9 @@ export default function App() {
             handlePress={() => router.push('/sign-in')}
             containerStyles="w-full" 
           />
-          <Text className="text-center font-semibold py-[40]">
+          {/* <Text className="text-center font-semibold py-[40]">
             Smart Scroll can make mistakes! check important information.
-          </Text>
+          </Text> */}
         </View>
       </ScrollView>
     </SafeAreaView>
