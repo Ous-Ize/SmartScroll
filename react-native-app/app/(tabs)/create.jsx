@@ -172,6 +172,13 @@ const Create = () => {
             isLoading={uploading}
           />
         </View>
+        <View
+          style={{
+            marginTop:50,
+          }}
+        >
+          <Text className="text-[rgb(90,90,90)]">SmartScroll can make mistakes. Check important info.</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
