@@ -17,7 +17,7 @@ export default function App() {
           />
           <Text 
             className="px-4 text-4xl text-black font-bold text-center mt-4 mb-20">
-              Welcome to Smart Scroll
+              Welcome to Smart Scroll!
             </Text>
             <CustomButton
             title="Continue with Email"

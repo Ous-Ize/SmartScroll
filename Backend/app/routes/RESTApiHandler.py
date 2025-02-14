@@ -6,6 +6,8 @@ import random
 import os
 import shutil
 from config import config
+from pydantic import BaseModel
+from smartscroll_chatbot.chatbot import Chatbot
 
 
 class BaseRoutes:
@@ -14,6 +16,7 @@ class BaseRoutes:
         self.collection_name = collection_name
         self.db_handler = db_handler
         self.setup_routes()
+        self.chatbot_instance = Chatbot(api_key=config.OPENAI_API_KEY)
 
     def setup_routes(self):
         @self.router.get("/", tags=[self.collection_name.capitalize()])
@@ -44,8 +47,6 @@ class BaseRoutes:
                 self.db_handler.insert_summary(document)
             elif self.collection_name == "quizzes":
                 self.db_handler.insert_quiz(document)
-            elif self.collection_name == "users":
-                self.db_handler.insert_user(document)
             else:
                 raise HTTPException(status_code=400, detail="Unknown collection")
             return {"message": f"{self.collection_name.capitalize()} created successfully."}
@@ -59,8 +60,6 @@ class BaseRoutes:
                 self.db_handler.update_summaries(filter, update)
             elif self.collection_name == "quizzes":
                 self.db_handler.update_quizzes(filter, update)
-            elif self.collection_name == "users":
-                self.db_handler.update_users(filter, update)
             else:
                 raise HTTPException(status_code=400, detail="Unknown collection")
             return {"message": f"{self.collection_name.capitalize()} updated successfully."}
@@ -71,6 +70,24 @@ class BaseRoutes:
             self.db_handler.delete_document(self.collection_name, filter)
             return {"message": f"{self.collection_name.capitalize()} deleted successfully."}
 
+        @self.router.post("/chat", response_model=ChatResponse, tags=["Chatbot"])
+        async def chat_endpoint(chat_request: ChatRequest):
+            """
+            Endpoint to receive a user's message and return a chatbot response.
+            """
+            try:
+                answer = self.chatbot_instance.ask(chat_request.message)
+                return ChatResponse(response=answer)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+class ChatResponse(BaseModel):
+    response: str
 
 
 class ExtraRoutes:
@@ -154,7 +171,3 @@ class QuizzesRoutes(BaseRoutes):
     def __init__(self):
         super().__init__("quizzes", db)
 
-
-class UsersRoutes(BaseRoutes):
-    def __init__(self):
-        super().__init__("users", db)
