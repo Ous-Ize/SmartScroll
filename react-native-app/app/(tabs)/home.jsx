@@ -325,13 +325,18 @@ const Home = () => {
       <View>
       <View className="px-4 space-y-6 bg-background">
         <View className="justify-between items-start flex-row ">
-          <View className="mt-1.5 ms-2">
+          <TouchableOpacity className="mt-1.5 ms-2"
+            onPress={() =>
+              router.push({
+                pathname: '/chatbot',
+              })}
+          >
             <Image
               source={images.chatbot}
               className="w-9 h-10"
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
           <View className="me-2">
             <Image
               source={images.flame}
