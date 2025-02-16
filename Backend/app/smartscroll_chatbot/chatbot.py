@@ -10,10 +10,10 @@ class Chatbot:
         openai.api_key = api_key
         # initializing a conversation history
         self.conversation_history = [
-            {"role": "system", "content": "You are a helpful assistant."}]
+            {"role": "system", "content": "You are a helpful assistant. Keep responses concise, direct, and under 200 tokens."}]
 
-    def ask(self, message: str, temperature: float = 0.7,
-            max_tokens: int = 150) -> str:
+    def ask(self, message: str, temperature: float = 0.3,
+            max_tokens: int = 250) -> str:
         """
         Sends a user message to OpenAI and returns the assistant's response.
 

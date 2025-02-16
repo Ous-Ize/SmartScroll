@@ -13,20 +13,32 @@ import { Link} from 'expo-router';
 
 
 const Profile = () => {
+  var full_name = "Max Mustermann"
   return (
     <SafeAreaView className="bg-background h-full">
-      <View style={styles.header}>
-        <Image source={images.chatbot} style={styles.icon} resizeMode="contain" />
-        <View style={styles.pointsContainer}>
-          <Text style={styles.pointsText}>+100</Text>
-          <Image source={images.flame} style={styles.icon} resizeMode="contain" />
+      <View className="px-4 space-y-6 bg-background">
+        <View className="justify-between items-start flex-row ">
+          <View className="mt-1.5 ms-2">
+            <Image
+              source={images.chatbot}
+              className="w-9 h-10"
+              resizeMode="contain"
+            />
+          </View>
+          <View className="me-2">
+            <Image
+              source={images.flame}
+              className="w-9 h-10"
+              resizeMode="contain"
+            />
+          </View>
         </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.content} className="mt-7"> 
         <View style={styles.profileContainer}>
           <Image source={images.profile} style={styles.profileImage} />
-          <Text style={styles.profileName}>Max Mustermann</Text>
+          <Text style={styles.profileName}>{full_name}</Text>
         </View>
 
         <View style={styles.section}>

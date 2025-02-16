@@ -22,6 +22,16 @@ const Search = () => {
           <Image source={images.flame} style={styles.icon} resizeMode="contain" />
         </View> */}
       </View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center", 
+          flex: 1, 
+        }}
+      >
+        <Text>This page is currently under construction.</Text>
+      </View>
+
 
     </SafeAreaView>
   );
