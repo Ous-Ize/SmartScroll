@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { Platform } from 'react-native';
 
 const DetailScreen = () => {
   const { title, summary, image_source } = useLocalSearchParams();
@@ -30,18 +31,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
     marginTop: 20,
     marginBottom: 10,
-    paddingStart: 10
+    paddingStart: 10,
+    fontFamily: Platform.select({ ios: 'Inter-ExtraBold'}),
   },
   text: {
     fontSize: 17,
     lineHeight: 24,
-    fontWeight: '300',
     padding: 10, 
     paddingBottom: 10,
-    marginBottom: 50
+    marginBottom: 50,
+    fontFamily: Platform.select({ ios: 'Inter-Light'}),
   },
 });
 

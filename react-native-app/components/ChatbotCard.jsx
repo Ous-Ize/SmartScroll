@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { PaperProvider, Card } from 'react-native-paper';
+import { Platform } from 'react-native';
 
 const ChatbotCard = ({ messages }) => {
   const scrollViewRef = useRef();
@@ -25,7 +26,7 @@ const ChatbotCard = ({ messages }) => {
             >
               <Card
                 style={{
-                  backgroundColor: msg.sender === 'user' ? '#F58232' : '#778da9',
+                  backgroundColor: msg.sender === 'user' ? '#F58232' : '#31572c',
                   padding: 10,
                   borderRadius: 15,
                   overflow: 'hidden',
@@ -34,8 +35,8 @@ const ChatbotCard = ({ messages }) => {
                 <Text
                   style={{
                     color: msg.sender === 'user' ? '#FFFDF5' : '#FFFDF5',
-                    fontSize: 18,
-                    fontWeight: 500
+                    fontSize: 16,
+                    fontFamily: Platform.select({ ios: 'Inter-Light' }),
                   }}
                 >
                   {msg.text}

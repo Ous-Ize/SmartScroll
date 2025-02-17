@@ -6,6 +6,7 @@ import CustomButton from '../../components/CustomButton';
 import FormField from '../../components/FormFieldCreate';
 import { router } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
+import { Platform } from 'react-native';
 
 const Create = () => {
   const [uploading, setUploading] = useState(false);
@@ -64,7 +65,7 @@ const Create = () => {
       console.log('Submitting PDF:', formData);
 
       // Post the form data to your backend endpoint
-      const response = await fetch('http://127.0.0.1:8000/upload-pdf', {
+      const response = await fetch('http://192.168.178.33:8000/upload-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -97,7 +98,8 @@ const Create = () => {
     <SafeAreaView className="bg-background h-full">
       <View className="my-4 px-4 space-y-6 bg-background">
         <View className="justify-center items-center flex-row">
-          <Text style={{ fontSize: 20, fontWeight: '700' }}>Upload Learning Material</Text>
+          <Text style={{ fontSize: 20, fontFamily: Platform.select({ ios: 'Inter-Bold' }),
+        }}>Upload Learning Material</Text>
         </View>
       </View>
       <View className="justify-center items-center mt-[80px]">
@@ -109,7 +111,7 @@ const Create = () => {
         />
         <View>
           <Text
-            style={{ fontSize: 20, fontWeight: '400', color: 'rgb(90,90,90)' }}
+            style={{ fontSize: 20, fontFamily: Platform.select({ ios: 'Inter-Regular' }), color: 'rgb(90,90,90)' }}
             className="justify-center items-center mt-6 mx-20 text-center"
           >
             Let AI generate learning content for you!
@@ -158,7 +160,7 @@ const Create = () => {
                   alt="upload"
                   className="w-8 h-8 mr-3"
                 />
-                <Text className="text-[rgb(90,90,90)] text-2xl">Add a PDF</Text>
+                <Text className="text-[rgb(90,90,90)] text-2xl" style={{fontFamily: Platform.select({ ios: 'Inter-Medium' })}}>Add a PDF</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -168,7 +170,7 @@ const Create = () => {
             title="Send"
             handlePress={submit}
             containerStyles="w-[160px] h-[70px] rounded-3xl"
-            textStyles="text-xl"
+            textStyles="text-2xl"
             isLoading={uploading}
           />
         </View>
@@ -177,7 +179,7 @@ const Create = () => {
             marginTop:50,
           }}
         >
-          <Text className="text-[rgb(90,90,90)]">SmartScroll can make mistakes. Check important info.</Text>
+          <Text className="text-[rgb(90,90,90)]" style={{fontFamily: Platform.select({ ios: 'Inter-Light' })}}>SmartScroll can make mistakes. Check important info.</Text>
         </View>
       </View>
     </SafeAreaView>

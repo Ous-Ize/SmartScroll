@@ -21,6 +21,7 @@ import SummaryCard from '../../components/SummaryCard';
 import FlashcardCard from '../../components/FlashcardCard';
 import { fetchUnsplashPhotos } from '../../services/unsplash';
 import QuizCard from '../../components/QuizCard';
+import { Platform } from 'react-native';
 
 // import quizData from '../../test-data/quizzes.json'; // Mock data for quizzes
 
@@ -37,7 +38,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [fetchingMore, setFetchingMore] = useState(false);
 
-  const API_URL = 'http://127.0.0.1:8000/newsfeed';
+  const API_URL = 'http://192.168.178.33:8000/newsfeed';
 
   const fetchAll = async (pageToFetch = 1, append = false) => {
     try {
@@ -50,7 +51,6 @@ const Home = () => {
       }
       const data = await response.json();
 
-      // Optional: If you need to fetch Unsplash images for summaries
       const updatedData = await Promise.all(
         data.map(async (item) => {
           if (item.type === 'summary') {
@@ -68,7 +68,6 @@ const Home = () => {
         })
       );
 
-      // If append flag is true, append the new data to the existing list; otherwise replace
       setNewsfeedData((prevData) =>
         append ? [...prevData, ...updatedData] : updatedData
       );
@@ -85,7 +84,7 @@ const Home = () => {
   const fetchSummaries = async () => {
     setRefreshing(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/summaries');
+      const response = await fetch('http://192.168.178.33:8000/summaries');
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
@@ -123,7 +122,7 @@ const Home = () => {
     setRefreshing(true);
     setError(null);
     try {
-      const response = await fetch('http://127.0.0.1:8000/flashcards');
+      const response = await fetch('http://192.168.178.33:8000/flashcards');
       if (!response.ok) {
         throw new Error(`Flashcards fetch error: ${response.status}`);
       }
@@ -142,7 +141,7 @@ const Home = () => {
     setRefreshing(true);
     setError(null);
     try {
-      const response = await fetch('http://127.0.0.1:8000/quizzes');
+      const response = await fetch('http://192.168.178.33:8000/quizzes');
       if (!response.ok) {
         throw new Error(`Quizzes fetch error: ${response.status}`);
       }
@@ -439,6 +438,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: '#888',
+    fontFamily: Platform.select({ ios: 'Inter-Regular'}),
   },
   selectedButton: {
     borderBottomWidth: 2, 

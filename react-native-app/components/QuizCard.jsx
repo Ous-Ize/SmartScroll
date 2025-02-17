@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Provider as PaperProvider, Card } from 'react-native-paper';
 import { useState, useEffect } from 'react';
+import { Platform } from 'react-native';
 
 const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
   const [backgroundColor, setBackgroundColor] = useState('');
@@ -16,7 +17,7 @@ const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [hasAnswered, setHasAnswered] = useState(false);
 
-  const colors = ['#34A0A4', '#168AAD', '#52B69A', '#52B69A'];
+  const colors = ['#133020', '#327039', '#212e40', '#5d2510'];
 
   useEffect(() => {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     color: '#FFFDF5',
     marginHorizontal: 15,
     marginBottom: 20,
+    fontFamily: Platform.select({ ios: 'Inter-Bold' }),
   },
   choiceButton: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -133,13 +135,14 @@ const styles = StyleSheet.create({
   choiceText: {
     color: '#FFFDF5',
     fontSize: 16,
+    fontFamily: Platform.select({ ios: 'Inter-Light' }),
   },
   feedbackText: {
     marginTop: 20,
     marginHorizontal: 15,
     color: '#FFFDF5',
-    fontStyle: 'italic',
     fontSize: 16,
+    fontFamily: Platform.select({ ios: 'Inter-Light' }),
   },
 });
 
