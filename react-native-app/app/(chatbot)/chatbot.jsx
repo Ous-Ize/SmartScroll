@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import ChatbotCard from '../../components/ChatbotCard';
+import { Platform } from 'react-native';
 
 const ChatBotScreen = () => {
     const [messages, setMessages] = useState([
-        { text: 'Hey! How can I help you? 😊', sender: 'bot' }
+        { text: 'Hey! How can I help you? 🐯', sender: 'bot' }
     ]);
     const [inputText, setInputText] = useState('');
 
@@ -17,7 +18,7 @@ const ChatBotScreen = () => {
         setInputText(''); 
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/summaries/chat', {
+            const response = await fetch('http://192.168.178.33:8000/summaries/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: inputText }),
@@ -57,7 +58,8 @@ const ChatBotScreen = () => {
                         paddingLeft: 20,
                         borderWidth: 1,
                         borderStyle: 'solid',
-                        marginLeft: 5
+                        marginLeft: 5,
+                        fontFamily: Platform.select({ ios: 'Inter-Regular' }),
                     }}
                     placeholder="Type a message..."
                     value={inputText}
@@ -76,7 +78,8 @@ const ChatBotScreen = () => {
                         marginRight: 5
                     }}
                 >
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 600}}>Send</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 600, 
+                        fontFamily: Platform.select({ ios: 'Inter-Bold' })}}>Send</Text>
                 </TouchableOpacity>
             </View>
 

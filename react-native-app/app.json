@@ -33,7 +33,11 @@
         {
           "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf", 
           "node_modules/@expo-google-fonts/inter/Inter_100Thin.ttf", "node_modules/@expo-google-fonts/inter/Inter_200ExtraLight.ttf",
-          "node_modules/@expo-google-fonts/inter/500Medium"
+          "node_modules/@expo-google-fonts/inter/Inter_500Medium",
+          "node_modules/@expo-google-fonts/inter/Inter_400Regular",
+          "node_modules/@expo-google-fonts/inter/Inter_600SemiBold",
+          "node_modules/@expo-google-fonts/inter/Inter_800ExtraBold",
+          "node_modules/@expo-google-fonts/inter/Inter_700Bold"
         ]
         }
       ]

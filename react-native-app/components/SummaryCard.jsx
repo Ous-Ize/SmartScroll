@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, SafeAreaView, ScrollView, Text, ImageBackground, View } from 'react-native';
 import { Provider as PaperProvider, Card } from 'react-native-paper';
+import { Platform } from 'react-native';
 
 const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => {
   return (
@@ -10,7 +11,7 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
           <ScrollView>
             <Card
               style={{
-                margin: 10,
+                margin: 5,
                 marginTop: 2,
                 borderRadius: 12,
                 overflow: 'hidden',
@@ -21,7 +22,7 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
                 source={{ uri: image_source }}
                 resizeMode="cover"
                 style={{
-                  height: 250,
+                  height: 260,
                   width: '100%',
                   justifyContent: 'flex-end',
                 }}
@@ -30,19 +31,19 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
                   style={{
                     backgroundColor: '#FFFDF5',
                     padding: 20,
-                    paddingLeft: 15,
+                    paddingLeft: 25,
                     paddingBottom: 15,
                     borderRadius: 12,
-                    height: 120,
+                    height: 135,
                   }}
                 >
                   {/* Subtitle */}
                   <Text
                     style={{
                       fontSize: 14,
-                      fontWeight: '300',
                       color: 'gray',
-                      marginBottom: 4, // Space between subtitle and title
+                      marginBottom: 4, 
+                      fontFamily: Platform.select({ ios: 'Inter-Regular'}),
                     }}
                   >
                     Summary
@@ -51,10 +52,11 @@ const SummaryCard = ({ summary: { title, summary, image_source }, onPress }) => 
                   {/* Title */}
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: '400',
                       fontFamily: 'Helvetica',
                       flexWrap: 'wrap',
+                      fontFamily: Platform.select({ ios: 'Inter-SemiBold'}),
                     }}
                     numberOfLines={4}
                   >

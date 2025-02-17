@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { PaperProvider, Card } from 'react-native-paper';
+import { Platform } from 'react-native';
 
 const FlashcardCard = ({ flashcard: { front, back } }) => {
   const [flipped, setFlipped] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
 
-  const colors = ['#34A0A4', '#168AAD', '#52B69A', '#52B69A'];
+  const colors = ['#133020', '#327039', '#212e40', '#5d2510'];
 
   useEffect(() => {
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    setBackgroundColor(randomColor);
+    setBackgroundColor(colors[Math.floor(Math.random() * colors.length)]);
   }, []);
 
   const handlePress = () => {
@@ -33,39 +33,39 @@ const FlashcardCard = ({ flashcard: { front, back } }) => {
             >
               <View
                 style={{
-                  padding: 5,
-                  paddingLeft: 15,
-                  paddingBottom: 5,
+                  padding: 20,
+                  paddingHorizontal: 30,
                   borderRadius: 20,
-                  height: 220,
+                  minHeight: 220,
                   justifyContent: 'center',
-                  alignItems: 'flex-start'
+                  alignItems: 'flex-start',
                 }}
               >
-                {/* Question/Answer Label */}
                 <Text
                   style={{
                     fontSize: 14,
                     fontWeight: '400',
                     color: '#FFFDF5',
                     marginBottom: 5,
-                    marginHorizontal: 15
+                    fontFamily: Platform.select({ ios: 'Inter-Light' }),
                   }}
                 >
                   {flipped ? 'Answer' : 'Question'}
                 </Text>
 
-                {/* Question/Answer Content */}
                 <Text
                   style={{
                     fontSize: 18,
                     fontWeight: '700',
-                    flexWrap: 'wrap',
+                    flexShrink: 1, 
+                    flexWrap: 'wrap', 
                     textAlign: 'start',
                     color: '#FFFDF5',
-                    marginHorizontal: 15
+                    fontFamily: Platform.select({ ios: 'Inter-Bold' }),
                   }}
-                  numberOfLines={6}
+                  numberOfLines={10}
+                  adjustsFontSizeToFit={true} 
+                  minimumFontScale={0.8} 
                 >
                   {flipped ? back : front}
                 </Text>
