@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { Platform } from 'react-native';
 
 import { icons } from "../constants";
 
@@ -43,13 +44,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'rgb(0, 0, 0)',
     marginBottom: 5,
-    marginLeft: 10, 
+    marginLeft: 10,
+    fontFamily: Platform.select({ ios: 'Inter-Medium' }),
+    color: '#414833', 
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgb(90,90,90)',
+    borderColor: '#414833',
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 12,
@@ -57,7 +60,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: 'black',
+    fontFamily: Platform.select({ ios: 'Inter-Medium' }),
+    color: '#414833',
   },
   icon: {
     width: 20,

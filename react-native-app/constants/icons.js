@@ -7,6 +7,8 @@ import clip from "../assets/icons/paper-clip.png"
 import trash from "../assets/icons/trash.png"
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
+import smartscroll from "../assets/icons/Hype.png"
+import zoomed_icon from "../assets/icons/zoomed-icon.png"
 
 export default {
   home,
@@ -18,4 +20,6 @@ export default {
   trash,
   eyeHide,
   eye,
+  smartscroll,
+  zoomed_icon
 };
