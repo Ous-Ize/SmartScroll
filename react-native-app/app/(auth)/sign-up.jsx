@@ -1,10 +1,11 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { images } from '../../constants';
+import { images, icons } from '../../constants';
 import FormField from '../../components/FormField';
 import { Link } from 'expo-router';
 import CustomButton from '../../components/CustomButton'
+import { Platform } from 'react-native';
 
 const SignUp= () => {
   const [form, setForm] = useState({
@@ -23,16 +24,25 @@ const SignUp= () => {
   return (
     <SafeAreaView className="bg-background h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[85vh] px-4 my-0">
           <View style={{ alignItems: 'center' }}>
-          <Image 
-            source={images.logo} 
-            resizeMode="contain" 
-            className="w-[120px] h-[120px]"
-          />  
-          <Text className="text-2xl text-black font-semibold mt-6 mb-5">
-            Sign up to Smart Scroll
-          </Text>
+          <View className="flex-row items-center mt-10">
+            <Text
+              className="text-2xl text-black font-semibold"
+              style={{
+                fontFamily: Platform.select({ ios: 'Inter-Black' }),
+                color: '#414833',
+              }}
+            >
+              Sign Up to
+            </Text>
+
+            <Image 
+              source={icons.zoomed_icon} 
+              resizeMode="contain" 
+              className="w-[100px] h-[100px] ml-2" 
+            />
+          </View>
           </View>
 
           <FormField 
@@ -71,10 +81,20 @@ const SignUp= () => {
           />
           <View className="justify-center pt-5 flex-row gap-2">
 
-            <Text className="text-lg font-pregular">
+            <Text className="text-lg font-pregular"
+              style={{
+                fontFamily: Platform.select({ ios: 'Inter-Medium' }),
+                color: '#414833',
+              }}
+            >
               Have an account already?
             </Text>
-            <Link href="/sign-in" className="text-lg font-psemibold text-secondary">
+            <Link 
+              style={{
+                fontFamily: Platform.select({ ios: 'Inter-Black' }),
+                color: '#414833',
+              }}
+              href="/sign-in" className="text-lg font-psemibold text-secondary">
               Sign In
             </Link>
           </View>

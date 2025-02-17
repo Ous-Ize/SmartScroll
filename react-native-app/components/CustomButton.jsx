@@ -1,4 +1,5 @@
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { Platform } from 'react-native';
 
 const CustomButton = ({
   title,
@@ -15,8 +16,16 @@ const CustomButton = ({
         isLoading ? "opacity-50" : ""
       }`}
       disabled={isLoading}
+      style={{borderRadius: 30}}
     >
-      <Text className={`text-background font-psemibold text-lg ${textStyles}`}>
+      <Text className={`text-background font-psemibold text-2xl ${textStyles}`}
+        style={{
+          fontFamily: Platform.select({
+            android: 'Inter_900Black',
+            ios: 'Inter-Black',
+          }),
+        }}
+      >
         {title}
       </Text>
 
