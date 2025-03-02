@@ -32,21 +32,26 @@ const SignIn = () => {
   
       const data = await response.json();
       
-      console.log("Backend-Antwort:", data);
+      console.log("Backend-Antwort:", data); 
   
       if (response.ok) {
-        alert('Login erfolgreich!');
+        alert('✅ Login erfolgreich!');
         router.push('/home'); 
       } else {
-        alert(typeof data.detail === 'string' ? data.detail : JSON.stringify(data));
+        if (Array.isArray(data.detail)) {
+          alert(data.detail[0].msg); 
+        } else {
+          alert(data.detail || '❌ Login fehlgeschlagen!');
+        }
       }
     } catch (error) {
       console.error('Login-Fehler:', error);
-      alert('Es gab ein Problem mit der Anmeldung.');
+      alert('❌ Es gab ein Problem mit der Anmeldung.');
     } finally {
       setIsSubmitting(false);
     }
   };
+  
     
   
   
