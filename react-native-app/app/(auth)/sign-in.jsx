@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 
 const SignIn = () => {
   const [form, setForm] = useState({
-    email: '',
+    username: '',
     password: ''
   })
   
@@ -19,27 +19,29 @@ const SignIn = () => {
     setIsSubmitting(true);
   
     try {
+      const requestBody = {
+        username: form.username,
+        password: form.password
+      };
+  
+      console.log("📤 Daten, die gesendet werden:", JSON.stringify(requestBody));
+  
       const response = await fetch('http://127.0.0.1:8000/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          username: form.email, 
-          password: form.password
-        })
+        body: JSON.stringify(requestBody)
       });
   
       const data = await response.json();
-      
-      console.log("Backend-Antwort:", data); 
   
       if (response.ok) {
         alert('✅ Login erfolgreich!');
-        router.push('/home'); 
+        router.push('/home');
       } else {
         if (Array.isArray(data.detail)) {
-          alert(data.detail[0].msg); 
+          alert(data.detail[0].msg);
         } else {
           alert(data.detail || '❌ Login fehlgeschlagen!');
         }
@@ -51,10 +53,7 @@ const SignIn = () => {
       setIsSubmitting(false);
     }
   };
-  
-    
-  
-  
+
   return (
     <SafeAreaView className="bg-background h-full">
       <ScrollView>
@@ -80,9 +79,9 @@ const SignIn = () => {
           </View>
 
           <FormField 
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            title="Username"
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: u })}
             otherStyles={styles.formField}
             keyboardType="email-address"
           />
