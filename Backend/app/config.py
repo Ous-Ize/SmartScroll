@@ -5,7 +5,7 @@ class Config:
     DB_NAME = "PPR_WiSe24_001"
     DEBUG = True
     UPLOAD_FOLDER = "pdfs"
-#    OPENAI_API_KEY = '' # Add your API key 
+    OPENAI_API_KEY = '' # Add your API key 
 
 
 config = Config()
