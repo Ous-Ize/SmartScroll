@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from database.mongoDBHandler import db
 from user_management.User import User
+from user_management.User import LoginRequest
 from user_management.Authenticator import Authenticator
 
 users_collection = db.get_collection("users")
@@ -22,7 +23,7 @@ class UserRoutes:
         users_collection.insert_one({"username": user.username, "password": hashed_password, "email": user.email})
         return {"message": "User registered successfully"}
 
-    def login(self, user: User):
+    def login(self, user: LoginRequest):
         """Authenticate user login."""
         existing_user = users_collection.find_one({"username": user.username})
         if not existing_user or not self.authenticator.verify_password(user.password, existing_user["password"]):
