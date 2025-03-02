@@ -3,5 +3,5 @@ uvicorn[standard]>=0.22.0
 pymongo>=4.4.0
 python-multipart
 pydantic
-openai=0.28.0
+openai==0.28.0
 bcrypt

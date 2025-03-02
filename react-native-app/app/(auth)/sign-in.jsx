@@ -9,16 +9,51 @@ import { Platform } from 'react-native';
 
 const SignIn = () => {
   const [form, setForm] = useState({
-    email: '',
+    username: '',
     password: ''
   })
   
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
-    console.log('Form Submitted')
-  }
+  const handleLogin = async () => {
+    setIsSubmitting(true);
   
+    try {
+      const requestBody = {
+        username: form.username,
+        password: form.password
+      };
+  
+      console.log("📤 Daten, die gesendet werden:", JSON.stringify(requestBody));
+  
+      const response = await fetch('http://127.0.0.1:8000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert('✅ Login erfolgreich!');
+        router.push('/home');
+      } else {
+        if (Array.isArray(data.detail)) {
+          alert(data.detail[0].msg);
+        } else {
+          alert(data.detail || '❌ Login fehlgeschlagen!');
+        }
+      }
+    } catch (error) {
+      console.error('Login-Fehler:', error);
+      alert('❌ Es gab ein Problem mit der Anmeldung.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <SafeAreaView className="bg-background h-full">
       <ScrollView>
@@ -44,12 +79,13 @@ const SignIn = () => {
           </View>
 
           <FormField 
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            title="Username"
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles={styles.formField}
             keyboardType="email-address"
           />
+
           
           <FormField 
             title="Password"
@@ -57,9 +93,10 @@ const SignIn = () => {
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles={styles.formField}
           />
+
           <CustomButton 
             title="Sign In"
-            handlePress={() => router.push('../home')}
+            handlePress={handleLogin} 
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
