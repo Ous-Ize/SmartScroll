@@ -15,9 +15,40 @@ const SignIn = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
-    console.log('Form Submitted')
-  }
+  const handleLogin = async () => {
+    setIsSubmitting(true);
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: form.email, 
+          password: form.password
+        })
+      });
+  
+      const data = await response.json();
+      
+      console.log("Backend-Antwort:", data);
+  
+      if (response.ok) {
+        alert('Login erfolgreich!');
+        router.push('/home'); 
+      } else {
+        alert(typeof data.detail === 'string' ? data.detail : JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error('Login-Fehler:', error);
+      alert('Es gab ein Problem mit der Anmeldung.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+    
+  
   
   return (
     <SafeAreaView className="bg-background h-full">
@@ -59,7 +90,7 @@ const SignIn = () => {
           />
           <CustomButton 
             title="Sign In"
-            handlePress={() => router.push('../home')}
+            handlePress={handleLogin} 
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
