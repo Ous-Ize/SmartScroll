@@ -81,10 +81,11 @@ const SignIn = () => {
           <FormField 
             title="Username"
             value={form.username}
-            handleChangeText={(e) => setForm({ ...form, username: u })}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles={styles.formField}
             keyboardType="email-address"
           />
+
           
           <FormField 
             title="Password"
@@ -92,6 +93,7 @@ const SignIn = () => {
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles={styles.formField}
           />
+
           <CustomButton 
             title="Sign In"
             handlePress={handleLogin} 
