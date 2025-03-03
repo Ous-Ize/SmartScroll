@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images, icons } from '../../constants';
@@ -15,9 +15,17 @@ const SignUp = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleSignUp = async () => {
     setIsSubmitting(true);
+    setErrorMessage(''); 
+
+    if (!form.username.trim() || !form.email.trim() || !form.password.trim()) {
+      setErrorMessage('Alle Felder müssen ausgefüllt sein!');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const requestBody = {
@@ -40,17 +48,15 @@ const SignUp = () => {
       console.log("📥 Backend-Antwort:", data);
 
       if (response.ok) {
-        Alert.alert('✅ Registrierung erfolgreich!', 'Bitte logge dich jetzt ein.');
+        setErrorMessage('Registrierung erfolgreich! Bitte logge dich jetzt ein.');
       } else {
-        if (Array.isArray(data.detail)) {
-          Alert.alert('❌ Fehler', data.detail[0].msg); 
-        } else {
-          Alert.alert('❌ Fehler', data.detail || 'Registrierung fehlgeschlagen!');
-        }
+        setErrorMessage(
+          Array.isArray(data.detail) ? data.detail[0].msg : (data.detail || 'Registrierung fehlgeschlagen!')
+        );
       }
     } catch (error) {
       console.error('Registrierungs-Fehler:', error);
-      Alert.alert('❌ Fehler', 'Es gab ein Problem mit der Registrierung.');
+      setErrorMessage('Es gab ein Problem mit der Registrierung.');
     } finally {
       setIsSubmitting(false);
     }
@@ -109,6 +115,13 @@ const SignUp = () => {
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
+
+          {}
+          {errorMessage !== '' && (
+            <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+              {errorMessage}
+            </Text>
+          )}
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg font-pregular"
