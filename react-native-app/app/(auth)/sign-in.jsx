@@ -20,6 +20,12 @@ const SignIn = () => {
     setIsSubmitting(true);
     setErrorMessage(''); 
 
+    if (!form.username.trim() || !form.password.trim()) {
+      setErrorMessage('Benutzername und Passwort erforderlich!');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const requestBody = {
         username: form.username,
@@ -42,7 +48,7 @@ const SignIn = () => {
         setErrorMessage('Login erfolgreich!');
         setTimeout(() => {
           router.push('/home');
-        }, 500);
+        }, 100);
       } else {
         setErrorMessage(
           Array.isArray(data.detail) ? data.detail[0].msg : (data.detail || 'Wrong username or password!')
