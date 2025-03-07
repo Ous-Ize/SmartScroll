@@ -65,7 +65,7 @@ const Create = () => {
       console.log('Submitting PDF:', formData);
 
       // Post the form data to your backend endpoint
-      const response = await fetch('http://192.168.178.33:8000/upload-pdf', {
+      const response = await fetch('http://127.0.0.1:8000/upload-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',

@@ -26,7 +26,7 @@ const ChatbotCard = ({ messages }) => {
             >
               <Card
                 style={{
-                  backgroundColor: msg.sender === 'user' ? '#F58232' : '#31572c',
+                  backgroundColor: msg.sender === 'user' ? '#8e9aaf' : '#0582ca',
                   padding: 10,
                   borderRadius: 15,
                   overflow: 'hidden',
@@ -36,7 +36,7 @@ const ChatbotCard = ({ messages }) => {
                   style={{
                     color: msg.sender === 'user' ? '#FFFDF5' : '#FFFDF5',
                     fontSize: 16,
-                    fontFamily: Platform.select({ ios: 'Inter-Light' }),
+                    fontFamily: Platform.select({ ios: 'Inter-Regular' }),
                   }}
                 >
                   {msg.text}

@@ -38,7 +38,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [fetchingMore, setFetchingMore] = useState(false);
 
-  const API_URL = 'http://192.168.178.33:8000/newsfeed';
+  const API_URL = 'http://127.0.0.1:8000/newsfeed';
 
   const fetchAll = async (pageToFetch = 1, append = false) => {
     try {
@@ -84,7 +84,7 @@ const Home = () => {
   const fetchSummaries = async () => {
     setRefreshing(true);
     try {
-      const response = await fetch('http://192.168.178.33:8000/summaries');
+      const response = await fetch('http://127.0.0.1:8000/summaries');
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
@@ -122,7 +122,7 @@ const Home = () => {
     setRefreshing(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.178.33:8000/flashcards');
+      const response = await fetch('http://127.0.0.1:8000/flashcards');
       if (!response.ok) {
         throw new Error(`Flashcards fetch error: ${response.status}`);
       }
@@ -141,7 +141,7 @@ const Home = () => {
     setRefreshing(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.178.33:8000/quizzes');
+      const response = await fetch('http://127.0.0.1:8000/quizzes');
       if (!response.ok) {
         throw new Error(`Quizzes fetch error: ${response.status}`);
       }
