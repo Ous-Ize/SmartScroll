@@ -3,7 +3,7 @@ SmartScroll is an AI-Driven Interactive Learning Platform is designed to provide
 learning experiences for students by automatically generating quizzes,
 flashcards, and summaries from user-uploaded study materials.
 
-![SmartScroll Prototype](SmartScroll_gif_prototype.gif)
+![SmartScroll Prototype](SmartScroll_git_prototype_2.0.gif)
 
 **React Native Installation**
 
