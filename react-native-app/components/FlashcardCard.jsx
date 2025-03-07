@@ -7,7 +7,7 @@ const FlashcardCard = ({ flashcard: { front, back } }) => {
   const [flipped, setFlipped] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
 
-  const colors = ['#133020', '#327039', '#212e40', '#5d2510'];
+  const colors = ['#0582ca', '#8e9aaf', '#5e60ce', '#02c39a'];
 
   useEffect(() => {
     setBackgroundColor(colors[Math.floor(Math.random() * colors.length)]);

@@ -17,7 +17,7 @@ const QuizCard = ({ quiz: { question, choices, correct_answer } }) => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [hasAnswered, setHasAnswered] = useState(false);
 
-  const colors = ['#133020', '#327039', '#212e40', '#5d2510'];
+  const colors = ['#0582ca', '#8e9aaf', '#5e60ce', '#02c39a'];
 
   useEffect(() => {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];

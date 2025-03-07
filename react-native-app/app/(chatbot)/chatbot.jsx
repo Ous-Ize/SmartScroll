@@ -18,7 +18,7 @@ const ChatBotScreen = () => {
         setInputText(''); 
 
         try {
-            const response = await fetch('http://192.168.178.33:8000/summaries/chat', {
+            const response = await fetch('http://127.0.0.1:8000/summaries/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: inputText }),
