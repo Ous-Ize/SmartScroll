@@ -27,6 +27,7 @@ npm start
 Note: you would need to install Expo, have a XCode Simulator on your macOS or have an Expo App installed on your iPhone.
 
 **Running the Server Side - Simulator (XCode)** 
+
 Note: you must be connected to Goethe Uni VPN to run the App server! (on all target devices, also available for iOS, macOS) 
 VPN instructions: https://www.rz.uni-frankfurt.de/45200557/Kurzanleitung, https://www.rz.uni-frankfurt.de/45186991/Verbinden_via_AnyConnect.
 
@@ -47,6 +48,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 **OpenAI API key**
+
 In addition, you will need to enter the OpenAI API key in config.py to upload the PDFs and communicate with the ChatBot. 
 As it is not safe to enter this key here, please contact our team privately to request the key.
 
